@@ -1,19 +1,21 @@
 ---
 import '../styles/index.css';
 import LanguageSwitcher from '../components/LanguageSwitcher';
-import { t } from 'astro-i18next';
+import { getLocaleFromPath, t } from '../i18n/utils';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
 ---
 
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/icons/org/logo-base.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Key Protocol</title>
+    <title>{t('title', locale)}</title>
   </head>
   <body>
     <LanguageSwitcher client:load />
-    <h1>{t('title')}</h1>
+    <h1>{t('title', locale)}</h1>
   </body>
 </html>
