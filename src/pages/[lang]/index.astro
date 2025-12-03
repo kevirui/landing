@@ -1,6 +1,6 @@
 ---
 import '@styles/index.css';
-import LanguageSwitcher from '@components/LanguageSwitcher';
+import Header from '@layouts/Header.astro';
 import type { Language } from '../../types/language.type';
 import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
@@ -34,7 +34,9 @@ const t = translations[lang];
     <title>{t.title}</title>
   </head>
   <body>
-    <LanguageSwitcher client:load />
-    <h1>{t.title}</h1>
+    <Header lang={lang} />
+    <main>
+      <h1>{t.title}</h1>
+    </main>
   </body>
 </html>

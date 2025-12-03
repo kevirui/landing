@@ -1,0 +1,28 @@
+---
+import Logo from '@components/Logo.astro';
+import Navigation from '@components/Navigation.astro';
+import LanguageSwitcher from '@components/LanguageSwitcher';
+import type { Language } from '../types/language.type';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+---
+
+<header class="w-full bg-green-900/80 backdrop-blur-sm sticky top-0 z-50 px-4 md:px-8 lg:px-12 py-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-3 items-center">
+    <div class="flex justify-start">
+      <Logo lang={lang} />
+    </div>
+
+    <div class="hidden md:flex justify-center">
+      <Navigation lang={lang} />
+    </div>
+
+    <div class="flex justify-end">
+      <LanguageSwitcher client:load />
+    </div>
+  </div>
+</header>

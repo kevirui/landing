@@ -1,5 +1,10 @@
 {
-  "welcome": "Bienvenido",
   "title": "Key Protocol",
-  "description": "Descripción de tu proyecto"
+  "nav": {
+    "home": "INICIO",
+    "about": "NOSOTROS",
+    "model": "MODELO",
+    "applications": "APLICACIONES",
+    "contact": "CONTACTO"
+  }
 }

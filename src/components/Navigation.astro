@@ -1,0 +1,35 @@
+---
+import type { Language } from '../types/language.type';
+import es from '@i18n/locales/es.json';
+import en from '@i18n/locales/en.json';
+import pt from '@i18n/locales/pt.json';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const translations = { es, en, pt };
+const t = translations[lang];
+
+const navItems = [
+  { key: 'home', path: `/${lang}` },
+  { key: 'about', path: `/${lang}/about` },
+  { key: 'model', path: `/${lang}/model` },
+  { key: 'applications', path: `/${lang}/applications` },
+  { key: 'contact', path: `/${lang}/contact` },
+];
+---
+
+<nav class="hidden md:flex items-center gap-8">
+  {
+    navItems.map(item => (
+      <a
+        href={item.path}
+        class="text-white uppercase font-medium text-sm tracking-wide hover:opacity-80 transition-opacity cursor-pointer"
+      >
+        {t.nav[item.key as keyof typeof t.nav]}
+      </a>
+    ))
+  }
+</nav>

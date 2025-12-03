@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Globe } from 'lucide-react';
 
 function getInitialLocale() {
   if (typeof window !== 'undefined') {
@@ -11,8 +12,16 @@ function getInitialLocale() {
   return 'es';
 }
 
+const languages = [
+  { code: 'es', name: 'Español' },
+  { code: 'en', name: 'English' },
+  { code: 'pt', name: 'Português' },
+];
+
 export default function LanguageSwitcher() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     // Sincronizar el idioma cuando cambia la URL
@@ -29,47 +38,91 @@ export default function LanguageSwitcher() {
     }
   }, [currentLocale]);
 
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () =>
+        document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
   const changeLanguage = locale => {
     if (typeof window !== 'undefined') {
       const currentPath = window.location.pathname;
       const pathWithoutLocale = currentPath.replace(/^\/(es|en|pt)/, '') || '/';
       const newPath = `/${locale}${pathWithoutLocale}`;
-      window.location.href = newPath;
+      setIsOpen(false);
+      window.location.assign(newPath);
     }
   };
 
+  const currentLang =
+    languages.find(lang => lang.code === currentLocale) || languages[0];
+
   return (
-    <div className="flex gap-2">
+    <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => changeLanguage('es')}
-        className={`px-3 py-1 rounded ${
-          currentLocale === 'es'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700'
-        }`}
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-4 py-2 bg-transparent border-2 border-white rounded-full text-white font-medium hover:bg-white/10 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-green-900"
+        aria-label="Cambiar idioma"
+        aria-expanded={isOpen}
       >
-        ES
+        <Globe size={18} className="shrink-0" />
+        <span className="uppercase">{currentLang.code}</span>
+        <svg
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
       </button>
-      <button
-        onClick={() => changeLanguage('en')}
-        className={`px-3 py-1 rounded ${
-          currentLocale === 'en'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700'
-        }`}
-      >
-        EN
-      </button>
-      <button
-        onClick={() => changeLanguage('pt')}
-        className={`px-3 py-1 rounded ${
-          currentLocale === 'pt'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700'
-        }`}
-      >
-        PT
-      </button>
+
+      {isOpen && (
+        <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
+          {languages.map(language => (
+            <button
+              key={language.code}
+              onClick={() => changeLanguage(language.code)}
+              className={`w-full px-4 py-3 text-left flex items-center justify-between cursor-pointer transition-colors duration-150 ${
+                currentLocale === language.code
+                  ? 'bg-green-50 text-green-700 font-medium'
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <div className="flex flex-col">
+                <span className="uppercase font-medium">{language.code}</span>
+                <span className="text-xs text-gray-500">{language.name}</span>
+              </div>
+              {currentLocale === language.code && (
+                <svg
+                  className="w-5 h-5 text-green-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
