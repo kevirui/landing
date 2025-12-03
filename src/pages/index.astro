@@ -1,21 +1,4 @@
 ---
-import '../styles/index.css';
-import LanguageSwitcher from '../components/LanguageSwitcher';
-import { getLocaleFromPath, t } from '../i18n/utils';
-
-const locale = getLocaleFromPath(Astro.url.pathname);
+// Redirect to default language
+return Astro.redirect('/es', 307);
 ---
-
-<html lang={locale}>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="/icons/org/logo-base.png" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{t('title', locale)}</title>
-  </head>
-  <body>
-    <LanguageSwitcher client:load />
-    <h1>{t('title', locale)}</h1>
-  </body>
-</html>
