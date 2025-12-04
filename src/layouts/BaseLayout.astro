@@ -1,6 +1,7 @@
 ---
 import '@styles/index.css';
 import type { Language } from '../types/language.type';
+import Header from './Header.astro';
 
 interface Props {
   lang: Language;
@@ -25,6 +26,7 @@ const { lang, title } = Astro.props;
     />
   </head>
   <body>
+    <Header lang={lang} />
     <slot />
   </body>
 </html>

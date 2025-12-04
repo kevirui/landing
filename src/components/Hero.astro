@@ -1,0 +1,49 @@
+---
+interface Props {
+  hero: {
+    tag: string;
+    headline: {
+      line1: string;
+      line2: string;
+      line3: string;
+      line4: string;
+    };
+  };
+}
+
+const { hero } = Astro.props;
+---
+
+<main class="relative min-h-screen flex items-center justify-start">
+  <div class="absolute inset-0 w-full h-full overflow-hidden">
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      class="absolute inset-0 w-full h-full object-cover opacity-30 blur-sm"
+    >
+      <source src="/videos/banner.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-gray-900/40"></div>
+  </div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 md:px-12">
+    <div class="mb-8">
+      <span
+        class="inline-block px-4 py-2 bg-gray-200/80 text-gray-800 rounded-lg text-sm font-montserrat font-semibold uppercase tracking-wide"
+      >
+        {hero.tag}
+      </span>
+    </div>
+
+    <h1
+      class="font-montserrat font-bold text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight"
+    >
+      <span class="block">{hero.headline.line1}</span>
+      <span class="block">{hero.headline.line2}</span>
+      <span class="block">{hero.headline.line3}</span>
+      <span class="block">{hero.headline.line4}</span>
+    </h1>
+  </div>
+</main>

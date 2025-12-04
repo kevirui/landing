@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Header from '@layouts/Header.astro';
+import Hero from '@components/Hero.astro';
 import type { Language } from '../../types/language.type';
 import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
@@ -26,8 +26,5 @@ const t = translations[lang];
 ---
 
 <BaseLayout lang={lang} title={t.title}>
-  <Header lang={lang} />
-  <main>
-    <h1>{t.title}</h1>
-  </main>
+  <Hero hero={t.hero} />
 </BaseLayout>

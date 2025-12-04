@@ -13,7 +13,6 @@ const translations = { es, en, pt };
 const t = translations[lang];
 
 const navItems = [
-  { key: 'home', path: `/${lang}` },
   { key: 'about', path: `/${lang}/about` },
   { key: 'model', path: `/${lang}/model` },
   { key: 'applications', path: `/${lang}/applications` },
@@ -26,7 +25,7 @@ const navItems = [
     navItems.map(item => (
       <a
         href={item.path}
-        class="text-white uppercase font-medium text-sm tracking-wide hover:opacity-80 transition-opacity cursor-pointer"
+        class="text-white font-bold uppercase text-sm tracking-wide hover:opacity-80 transition-opacity cursor-pointer"
       >
         {t.nav[item.key as keyof typeof t.nav]}
       </a>
