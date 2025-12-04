@@ -1,4 +1,6 @@
 ---
+import PoweredBy from './PoweredBy.astro';
+
 interface Props {
   hero: {
     tag: string;
@@ -14,7 +16,7 @@ interface Props {
 const { hero } = Astro.props;
 ---
 
-<main class="relative min-h-screen flex items-center justify-start">
+<main class="relative min-h-screen flex flex-col justify-between">
   <div class="absolute inset-0 w-full h-full overflow-hidden">
     <video
       autoplay
@@ -28,7 +30,9 @@ const { hero } = Astro.props;
     <div class="absolute inset-0 bg-gray-900/40"></div>
   </div>
 
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 md:px-12">
+  <div
+    class="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 md:px-12 flex-1 flex flex-col justify-center"
+  >
     <div class="mb-8">
       <span
         class="inline-block px-4 py-2 bg-gray-200/80 text-gray-800 rounded-lg text-sm font-montserrat font-semibold uppercase tracking-wide"
@@ -46,4 +50,6 @@ const { hero } = Astro.props;
       <span class="block">{hero.headline.line4}</span>
     </h1>
   </div>
+
+  <PoweredBy />
 </main>

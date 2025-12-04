@@ -1,0 +1,24 @@
+---
+import Image from 'astro/components/Image.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+}
+
+const { src, alt, width = 80, height = 80, class: className = '' } = Astro.props;
+---
+
+<div class="flex items-center">
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    class={`h-16 w-16 md:h-44 md:w-44 object-contain brightness-0 invert ${className}`}
+  />
+</div>
+

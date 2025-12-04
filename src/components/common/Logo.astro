@@ -10,13 +10,13 @@ const { lang = 'es' } = Astro.props;
 
 <a
   href={`/${lang}`}
-  class="flex items-center gap-2 hover:opacity-80 transition-opacity"
+  class="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
 >
   <Image
     src="/icons/org/logo.png"
     alt="KEY Protocol Logo"
     width={48}
     height={48}
-    class="h-12 w-12 object-contain"
+    class="h-12 w-12 md:h-24 md:w-24 object-contain"
   />
 </a>
