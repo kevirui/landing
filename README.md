@@ -34,57 +34,85 @@ pnpm preview
 
 ## 📧 Configuración del Formulario de Contacto
 
-El formulario de contacto utiliza **Resend** para enviar correos electrónicos. Para configurarlo:
+El formulario de contacto utiliza **SendGrid** para enviar correos electrónicos. SendGrid permite enviar correos a cualquier destinatario sin restricciones del dominio de prueba.
 
-### 1. Obtener API Key de Resend
+### 1. Crear cuenta en SendGrid
 
-1. Ve a [https://resend.com/](https://resend.com/)
-2. Crea una cuenta o inicia sesión
-3. Navega a **API Keys** en el dashboard
-4. Crea una nueva API Key
-5. Copia la API Key (comienza con `re_`)
+1. Ve a [https://sendgrid.com/](https://sendgrid.com/)
+2. Crea una cuenta gratuita (permite 100 emails/día)
+3. Completa la verificación de email
 
-### 2. Variables de Entorno
+### 2. Crear API Key en SendGrid
 
-Crea un archivo `.env` en la raíz del proyecto o configura las variables en Vercel:
+1. Una vez en tu cuenta, ve a **Settings** → **API Keys**
+2. Haz clic en **Create API Key**
+3. Nombre: "Key Protocol Contact Form" (o el que prefieras)
+4. Permisos: Selecciona **Full Access** o **Restricted Access** con permisos de "Mail Send"
+5. Haz clic en **Create & View**
+6. **IMPORTANTE**: Copia la API Key inmediatamente (solo se muestra una vez)
+   - La API Key comienza con `SG.`
+
+### 3. Verificar un remitente (Sender Identity)
+
+Para poder enviar correos, necesitas verificar un remitente:
+
+#### Opción A: Verificar un solo email (más rápido para pruebas)
+
+1. Ve a **Settings** → **Sender Authentication** → **Single Sender Verification**
+2. Haz clic en **Create New Sender**
+3. Completa el formulario:
+   - **From Email**: `noreply@keyprotocol.com` (o cualquier email)
+   - **From Name**: `Key Protocol`
+   - **Reply To**: Tu email personal (ej: `martinlago84@gmail.com`)
+   - **Company Address**: Tu dirección
+4. Verifica el email que recibirás
+5. Una vez verificado, podrás usarlo en `SENDGRID_FROM_EMAIL`
+
+#### Opción B: Verificar un dominio (recomendado para producción)
+
+1. Ve a **Settings** → **Sender Authentication** → **Domain Authentication**
+2. Haz clic en **Authenticate Your Domain**
+3. Selecciona tu proveedor DNS
+4. Agrega los registros DNS que SendGrid te proporciona
+5. Espera la verificación (puede tardar hasta 48 horas, pero normalmente es más rápido)
+
+### 4. Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
-# API Key de Resend (REQUERIDO en producción)
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# API Key de SendGrid (REQUERIDO en producción)
+SENDGRID_API_KEY=SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Email desde el cual se enviará el correo
-# Si no tienes un dominio verificado, usa: onboarding@resend.dev
-# Si tienes un dominio verificado, usa: contacto@tudominio.com
-RESEND_FROM_EMAIL=onboarding@resend.dev
+# Email desde el cual se enviará el correo (debe estar verificado en SendGrid)
+SENDGRID_FROM_EMAIL=noreply@keyprotocol.com
 
 # Email destinatario (a dónde llegarán los mensajes del formulario)
-RESEND_TO_EMAIL=tu-email@ejemplo.com
+SENDGRID_TO_EMAIL=martinlago84@gmail.com
 ```
 
-### 3. Configuración en Vercel
+### 5. Configuración en Vercel
 
 Si el proyecto está desplegado en Vercel:
 
 1. Ve a tu proyecto en [Vercel Dashboard](https://vercel.com/dashboard)
 2. Navega a **Settings** → **Environment Variables**
 3. Agrega las siguientes variables:
-   - `RESEND_API_KEY`: Tu API Key de Resend
-   - `RESEND_TO_EMAIL`: Tu correo personal donde recibirás los mensajes
-   - `RESEND_FROM_EMAIL`: (Opcional) Email remitente, por defecto `onboarding@resend.dev`
+   - `SENDGRID_API_KEY`: Tu API Key de SendGrid (comienza con `SG.`)
+   - `SENDGRID_FROM_EMAIL`: El email verificado en SendGrid
+   - `SENDGRID_TO_EMAIL`: Tu correo personal donde recibirás los mensajes (ej: `martinlago84@gmail.com`)
 4. Redespliega la aplicación
 
-### 4. Verificación de Dominio (Opcional)
+### 6. Probar el Formulario
 
-Para usar un dominio personalizado como remitente:
+- **En desarrollo**: Los correos se mostrarán en la consola si no hay `SENDGRID_API_KEY` configurada
+- **En producción**: Los correos se enviarán a través de SendGrid cuando todas las variables estén configuradas
 
-1. En el dashboard de Resend, ve a **Domains**
-2. Agrega y verifica tu dominio
-3. Una vez verificado, actualiza `RESEND_FROM_EMAIL` con un email de tu dominio (ej: `contacto@tudominio.com`)
+### 7. Límites del plan gratuito
 
-### 5. Probar el Formulario
-
-- **En desarrollo**: Los correos se mostrarán en la consola si no hay `RESEND_API_KEY` configurada
-- **En producción**: Los correos se enviarán a través de Resend cuando todas las variables estén configuradas
+- **100 emails/día** gratis
+- Sin límite de destinatarios (puedes enviar a cualquier email)
+- Ideal para landing pages pequeñas/medianas
 
 ## 📁 Estructura del Proyecto
 
