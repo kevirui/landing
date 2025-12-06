@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { Resend } from 'resend';
 
 /**
  * API endpoint para manejar el envío de formularios de contacto
@@ -116,32 +117,34 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
           throw new Error(`Invalid from email format: ${fromEmail}`);
         }
 
-        const resendResponse = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${RESEND_API_KEY}`,
-          },
-          body: JSON.stringify({
+        // Initialize Resend client
+        const resend = new Resend(RESEND_API_KEY);
+
+        // Try to send email
+        try {
+          const { data, error } = await resend.emails.send({
             from: fromEmail,
             to: recipientEmail,
             subject: emailSubject,
             text: emailBody,
-            reply_to: email,
-          }),
-        });
+            replyTo: email,
+          });
 
-        if (!resendResponse.ok) {
-          const errorData = await resendResponse.json();
-          const errorMessage =
-            errorData.message ||
-            errorData.error?.message ||
-            'Error al enviar el email';
+          if (error) {
+            throw error;
+          }
 
+          console.log('Email sent successfully via Resend:', data);
+          emailSent = true;
+        } catch (resendError: any) {
           // If domain is not verified, try with the default test domain
+          const errorMessage =
+            resendError?.message || 'Error al enviar el email';
+
           if (
             errorMessage.includes('domain is not verified') ||
-            errorMessage.includes('not verified')
+            errorMessage.includes('not verified') ||
+            errorMessage.includes('Invalid `from` field')
           ) {
             console.warn(
               `Domain ${fromEmail} not verified. Trying with default test domain...`
@@ -149,44 +152,27 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
             fromEmail = 'onboarding@resend.dev';
 
             // Retry with the default test domain
-            const retryResponse = await fetch('https://api.resend.com/emails', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${RESEND_API_KEY}`,
-              },
-              body: JSON.stringify({
+            const { data: retryData, error: retryError } =
+              await resend.emails.send({
                 from: fromEmail,
                 to: recipientEmail,
                 subject: emailSubject,
                 text: emailBody,
-                reply_to: email,
-              }),
-            });
+                replyTo: email,
+              });
 
-            if (!retryResponse.ok) {
-              const retryErrorData = await retryResponse.json();
-              const retryErrorMessage =
-                retryErrorData.message ||
-                retryErrorData.error?.message ||
-                'Error al enviar el email';
-              throw new Error(retryErrorMessage);
+            if (retryError) {
+              throw retryError;
             }
 
-            const retryResponseData = await retryResponse.json();
             console.log(
               'Email sent successfully via Resend (using test domain):',
-              retryResponseData
+              retryData
             );
             emailSent = true;
           } else {
-            console.error('Resend API error:', errorData);
-            throw new Error(errorMessage);
+            throw resendError;
           }
-        } else {
-          const responseData = await resendResponse.json();
-          console.log('Email sent successfully via Resend:', responseData);
-          emailSent = true;
         }
       } catch (error: any) {
         console.error('Error sending email via Resend:', error);
