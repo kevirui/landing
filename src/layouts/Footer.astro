@@ -1,0 +1,21 @@
+---
+interface Props {
+  footer: {
+    copyright: string;
+    tagline: string;
+  };
+}
+
+const { footer } = Astro.props;
+---
+
+<footer class="w-full bg-[#3d5a47] py-8 px-4">
+  <div class="max-w-7xl mx-auto text-center">
+    <p class="text-gray-200 text-sm md:text-base mb-2">
+      {footer.copyright}
+    </p>
+    <p class="text-gray-200 text-sm md:text-base">
+      {footer.tagline}
+    </p>
+  </div>
+</footer>

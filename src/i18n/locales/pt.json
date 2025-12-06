@@ -192,5 +192,9 @@
       "linkedin": "https://linkedin.com/company/keyprotocol",
       "youtube": "https://youtube.com/@keyprotocol"
     }
+  },
+  "footer": {
+    "copyright": "© 2025 KEY Protocol Argentina. Todos os direitos reservados.",
+    "tagline": "Escrevendo código para regenerar o mundo"
   }
 }

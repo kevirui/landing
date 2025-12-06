@@ -2,13 +2,18 @@
 import '@styles/index.css';
 import type { Language } from '../types/language.type';
 import Header from './Header.astro';
+import Footer from './Footer.astro';
 
 interface Props {
   lang: Language;
   title: string;
+  footer?: {
+    copyright: string;
+    tagline: string;
+  };
 }
 
-const { lang, title } = Astro.props;
+const { lang, title, footer } = Astro.props;
 ---
 
 <html lang={lang}>
@@ -28,5 +33,6 @@ const { lang, title } = Astro.props;
   <body>
     <Header lang={lang} />
     <slot />
+    {footer && <Footer footer={footer} />}
   </body>
 </html>
