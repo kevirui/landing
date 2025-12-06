@@ -2,17 +2,31 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 import { fileURLToPath } from 'url';
 import { resolve } from 'path';
 
-// https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({}),
   integrations: [react()],
+  build: {
+    inlineStylesheets: 'auto',
+    assets: '_assets',
+  },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      minify: 'esbuild',
+      cssMinify: true,
+    },
+    esbuild: {
+      // Ofuscación de nombres: convierte nombres de variables/funciones a letras cortas
+      minifyIdentifiers: true, // Reduce nombres de variables a identificadores cortos (a, b, c, etc.)
+      minifySyntax: true, // Minifica la sintaxis
+      minifyWhitespace: true, // Elimina espacios en blanco
+      legalComments: 'none', // Elimina todos los comentarios
+    },
     resolve: {
       alias: {
         '@layouts': resolve(fileURLToPath(import.meta.url), '../src/layouts'),
