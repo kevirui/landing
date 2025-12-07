@@ -69,14 +69,15 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent border-2 border-white rounded-full text-white font-medium hover:bg-white/10 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-green-900 text-sm"
+        className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-transparent border-2 border-white rounded-full text-white font-medium hover:bg-white/10 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-green-900 text-xs sm:text-sm"
         aria-label="Cambiar idioma"
         aria-expanded={isOpen}
       >
-        <Globe size={16} className="shrink-0" />
-        <span className="uppercase">{currentLang.code}</span>
+        <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+        <span className="uppercase hidden sm:inline">{currentLang.code}</span>
+        <span className="uppercase sm:hidden">{currentLang.code}</span>
         <svg
-          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -91,24 +92,24 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full right-0 mt-2 w-40 sm:w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
           {languages.map(language => (
             <button
               key={language.code}
               onClick={() => changeLanguage(language.code)}
-              className={`w-full px-4 py-3 text-left flex items-center justify-between cursor-pointer transition-colors duration-150 ${
+              className={`w-full px-3 sm:px-4 py-2 sm:py-3 text-left flex items-center justify-between cursor-pointer transition-colors duration-150 ${
                 currentLocale === language.code
                   ? 'bg-green-50 text-green-700 font-medium'
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
               <div className="flex flex-col">
-                <span className="uppercase font-medium">{language.code}</span>
-                <span className="text-xs text-gray-500">{language.name}</span>
+                <span className="uppercase font-medium text-xs sm:text-sm">{language.code}</span>
+                <span className="text-xs text-gray-500 hidden sm:block">{language.name}</span>
               </div>
               {currentLocale === language.code && (
                 <svg
-                  className="w-5 h-5 text-green-600"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 shrink-0"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >

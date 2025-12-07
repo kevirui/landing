@@ -34,7 +34,7 @@ const { title, description, milestones } = Astro.props;
       <div class="flex items-start gap-3">
         {milestone.completed ? (
           <div
-            class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5"
+            class="shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5"
             style="background-color: #4A9B7F;"
           >
             <svg
@@ -53,7 +53,7 @@ const { title, description, milestones } = Astro.props;
           </div>
         ) : (
           <div
-            class="flex-shrink-0 w-6 h-6 rounded-full border-2 mt-0.5"
+            class="shrink-0 w-6 h-6 rounded-full border-2 mt-0.5"
             style="border-color: #4A9B7F;"
           ></div>
         )}

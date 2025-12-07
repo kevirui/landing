@@ -7,9 +7,9 @@ interface Props {
 const { icon, text } = Astro.props;
 ---
 
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 sm:gap-3">
   <svg
-    class="w-6 h-6 text-white"
+    class="w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -39,6 +39,6 @@ const { icon, text } = Astro.props;
       </>
     )}
   </svg>
-  <span class="text-gray-300 text-base md:text-lg">{text}</span>
+  <span class="text-gray-300 text-sm sm:text-base md:text-lg break-words">{text}</span>
 </div>
 

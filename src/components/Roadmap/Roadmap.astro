@@ -1,6 +1,5 @@
 ---
-import Timeline from './Timeline.astro';
-import RoadmapCarousel from './RoadmapCarousel.jsx';
+import RoadmapContainer from './RoadmapContainer.jsx';
 
 interface Props {
   roadmap: {
@@ -25,20 +24,23 @@ interface Props {
 const { roadmap } = Astro.props;
 ---
 
-<section class="py-16 md:py-24 px-6" style="background-color: #2E7D32;">
+<section
+  class="py-8 sm:py-12 md:py-18 lg:py-24 px-3 sm:px-4 md:px-6 lg:px-8"
+  style="background-color: #2E7D32;"
+>
   <div class="max-w-7xl mx-auto">
     <!-- Title -->
     <h2
-      class="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-12 text-white"
+      class="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat font-bold mb-5 sm:mb-6 md:mb-8 lg:mb-12 text-white"
     >
       {roadmap.title}
     </h2>
 
-    <!-- Timeline -->
-    <Timeline quarters={roadmap.timeline.quarters} />
-
-    <!-- Roadmap Carousel -->
-    <RoadmapCarousel client:load phases={roadmap.phases} />
+    <!-- Roadmap Container (Timeline + Carousel) -->
+    <RoadmapContainer
+      client:load
+      quarters={roadmap.timeline.quarters}
+      phases={roadmap.phases}
+    />
   </div>
 </section>
-

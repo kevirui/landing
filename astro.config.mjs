@@ -3,12 +3,16 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
+import node from '@astrojs/node';
 import { fileURLToPath } from 'url';
 import { resolve } from 'path';
 
+// Usar adaptador de Node.js para preview local, Vercel para producción
+const isPreview = process.env.ASTRO_PREVIEW === 'true';
+
 export default defineConfig({
   output: 'server',
-  adapter: vercel({}),
+  adapter: isPreview ? node({ mode: 'standalone' }) : vercel({}),
   integrations: [react()],
   build: {
     inlineStylesheets: 'auto',

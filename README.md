@@ -200,7 +200,7 @@ Endpoint para procesar el formulario de contacto.
 
 - `name` (string, requerido): Nombre del usuario
 - `email` (string, requerido): Email del usuario
-- `socialNetwork` (string, opcional): Red social
+- `socialNetwork` (string, opcional): Asunto
 - `message` (string, requerido): Mensaje
 
 **Respuesta exitosa (200):**

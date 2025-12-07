@@ -107,7 +107,7 @@ function generateEmailHTML(
                     <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
                       <tr>
                         <td style="padding: 0; width: 120px; color: #666666; font-size: 14px; font-weight: 600; vertical-align: top;">
-                          Red Social:
+                          Asunto:
                         </td>
                         <td style="padding: 0; color: #333333; font-size: 14px;">
                           ${escapedSocialNetwork}
@@ -228,7 +228,7 @@ Nuevo mensaje de contacto desde el sitio web de Key Protocol:
 
 Nombre: ${name}
 Email: ${email}
-Red Social: ${socialNetwork || 'No especificada'}
+Asunto: ${socialNetwork || 'No especificada'}
 Mensaje:
 ${message}
 

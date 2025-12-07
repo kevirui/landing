@@ -179,7 +179,7 @@
       "fields": {
         "name": "Nome",
         "email": "Email",
-        "socialNetwork": "Rede Social",
+        "socialNetwork": "Assunto",
         "message": "Mensagem"
       },
       "send": "Enviar",

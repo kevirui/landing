@@ -70,11 +70,11 @@ export default function MetricModal({
   return (
     <div
       ref={modalRef}
-      className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6"
       data-modal
     >
       <div
-        className="relative mx-4 w-full max-w-5xl rounded-2xl overflow-hidden shadow-2xl aspect-video"
+        className="relative w-full max-w-5xl rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl aspect-video"
         onClick={e => e.stopPropagation()}
       >
         {/* Background Image */}
@@ -88,12 +88,12 @@ export default function MetricModal({
 
         {/* Close button */}
         <button
-          className="modal-close-button absolute top-4 right-4 z-20 rounded-full bg-black/50 backdrop-blur-sm p-2 text-white transition-colors hover:bg-black/70"
+          className="modal-close-button absolute top-2 right-2 sm:top-4 sm:right-4 z-20 rounded-full bg-black/50 backdrop-blur-sm p-1.5 sm:p-2 text-white transition-colors hover:bg-black/70"
           onClick={() => setIsOpen(false)}
           aria-label="Cerrar modal"
         >
           <svg
-            className="h-6 w-6"
+            className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -108,21 +108,21 @@ export default function MetricModal({
         </button>
 
         {/* Metric Block - Top Left */}
-        <div className="modal-content-metric absolute top-6 left-6 md:top-8 md:left-8 z-10">
-          <div className="rounded-xl  p-4 md:p-6 ">
-            <div className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold text-white mb-2">
+        <div className="modal-content-metric absolute top-3 left-3 sm:top-4 sm:left-4 md:top-6 md:left-6 lg:top-8 lg:left-8 z-10">
+          <div className="rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6">
+            <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat font-bold text-white mb-1 sm:mb-2">
               {value}
             </div>
-            <div className="text-base md:text-lg font-montserrat font-semibold text-white">
+            <div className="text-xs sm:text-sm md:text-base lg:text-lg font-montserrat font-semibold text-white">
               {label}
             </div>
           </div>
         </div>
 
         {/* Description Block - Bottom Left */}
-        <div className="modal-content-description absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10 max-w-2xl">
-          <div className="rounded-xl  p-4 md:p-6 ">
-            <p className="text-white text-sm md:text-base lg:text-lg leading-relaxed">
+        <div className="modal-content-description absolute bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 lg:bottom-8 lg:left-8 z-10 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-2xl">
+          <div className="rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6">
+            <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
               {description}
             </p>
           </div>
