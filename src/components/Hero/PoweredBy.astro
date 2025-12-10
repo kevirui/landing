@@ -1,34 +1,44 @@
 ---
 import PartnerLogo from '@components/common/PartnerLogo.astro';
+
+const allies = [
+  {
+    name: 'Fundación Gran Chaco',
+    logo: '/icons/partners/fund.png',
+    href: 'https://gran-chaco.org/es/home/',
+  },
+  {
+    name: 'UTN - Universidad Tecnológica Nacional',
+    logo: '/icons/partners/utn.png',
+    href: 'https://www.utn.edu.ar',
+  },
+  {
+    name: 'NerdConf',
+    logo: '/icons/partners/nerdconf.png',
+    href: 'https://nerdconf.com',
+  },
+  {
+    name: 'LatinHack',
+    logo: '/icons/partners/latinhack.png',
+    href: 'https://latinhack.io/',
+  },
+];
 ---
 
 <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
-  <p class="text-white text-center text-base sm:text-lg md:text-xl font-montserrat font-bold mb-4 sm:mb-6 md:mb-8">
+  <p
+    class="text-white text-center text-base sm:text-lg md:text-xl font-montserrat font-bold mb-4 sm:mb-6 md:mb-8"
+  >
     Powered By
   </p>
 
   <div
     class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16"
   >
-    <PartnerLogo
-      src="/icons/partners/fund.png"
-      alt="Fundación Gran Chaco"
-      href="https://gran-chaco.org/es/home/"
-    />
-    <PartnerLogo
-      src="/icons/partners/utn.png"
-      alt="UTN - Universidad Tecnológica Nacional"
-      href="https://www.utn.edu.ar"
-    />
-    <PartnerLogo
-      src="/icons/partners/nerdconf.png"
-      alt="NerdConf"
-      href="https://nerdconf.com"
-    />
-    <PartnerLogo
-      src="/icons/partners/latinhack.png"
-      alt="Latin Hack"
-      href="https://latinhack.io/"
-    />
+    {
+      allies.map(ally => (
+        <PartnerLogo src={ally.logo} alt={ally.name} href={ally.href} />
+      ))
+    }
   </div>
 </div>

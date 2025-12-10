@@ -3,6 +3,7 @@ import type { Language } from '../../types/language.type';
 import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
 import pt from '@i18n/locales/pt.json';
+import PartnerLogo from '@components/common/PartnerLogo.astro';
 
 interface Props {
   lang: Language;
@@ -16,18 +17,22 @@ const allies = [
   {
     name: 'Fundación Gran Chaco',
     logo: '/icons/partners/fund.png',
+    href: 'https://gran-chaco.org/es/home/',
   },
   {
-    name: 'UTN',
+    name: 'UTN - Universidad Tecnológica Nacional',
     logo: '/icons/partners/utn.png',
+    href: 'https://www.utn.edu.ar',
   },
   {
     name: 'NerdConf',
     logo: '/icons/partners/nerdconf.png',
+    href: 'https://nerdconf.com',
   },
   {
     name: 'LatinHack',
     logo: '/icons/partners/latinhack.png',
+    href: 'https://latinhack.io/',
   },
 ];
 ---
@@ -40,16 +45,12 @@ const allies = [
     </p>
   </div>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center">
+  <div
+    class="flex flex-wrap items-center justify-center gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-20"
+  >
     {
       allies.map(ally => (
-        <div class="flex justify-center">
-          <img
-            src={ally.logo}
-            alt={ally.name}
-            class="max-h-16 opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
-          />
-        </div>
+        <PartnerLogo src={ally.logo} alt={ally.name} href={ally.href} />
       ))
     }
   </div>
