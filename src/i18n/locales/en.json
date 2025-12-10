@@ -111,7 +111,53 @@
     "hero": {
       "title": "Services",
       "description": "Our technology is modular. We offer specific solutions to solve critical management, identity, and validation problems."
-    }
+    },
+    "services": [
+      {
+        "id": "identity",
+        "title": "Decentralized Digital Identity (DID)",
+        "subtitle": "The digital passport for development.",
+        "description": "Create and manage sovereign identities for beneficiaries in areas without connectivity.",
+        "icon": "biometric.png",
+        "functionality": "Offline biometric and documentary registration that generates a verifiable confidential credential on the blockchain.",
+        "advantage": "The ability to link acquired skills to individuals enables the implementation of impact projects based on verified and confidential data.",
+        "idealFor": "NGOs, Governments, Financial Inclusion Programs.",
+        "status": "available"
+      },
+      {
+        "id": "documentation",
+        "title": "Field Documentation",
+        "subtitle": "Immutable evidence in real-time.",
+        "description": "Capture and certify field activities with geolocated evidence and automatic synchronization.",
+        "icon": "doc.png",
+        "functionality": "Geolocated multimedia capture (photos, audio, reports) that is packaged, encrypted, and automatically synchronized with IPFS and blockchain.",
+        "advantage": "Eliminates the need for manual verification processes, reducing time and operational costs while ensuring evidence authenticity.",
+        "idealFor": "Field projects, Audits, Monitoring and evaluation programs.",
+        "status": "available"
+      },
+      {
+        "id": "keybox",
+        "title": "KeyBox",
+        "subtitle": "Secure credential management.",
+        "description": "Key and credential management system with end-to-end encryption to protect sensitive data.",
+        "icon": "keyBox.png",
+        "functionality": "Local and encrypted storage of private keys with secure recovery through seed phrases and biometric authentication.",
+        "advantage": "Ensures users maintain full control over their credentials without relying on centralized servers, even in offline environments.",
+        "idealFor": "Organizations handling sensitive data, Digital identity programs.",
+        "status": "coming_soon"
+      },
+      {
+        "id": "analytics",
+        "title": "Analytics & Reporting",
+        "subtitle": "Blockchain-certified metrics.",
+        "description": "Real-time metrics dashboard and automatic generation of certified reports for total transparency.",
+        "icon": "stats.png",
+        "functionality": "Real-time KPI visualization with automatic generation of blockchain-certified reports and data export.",
+        "advantage": "Allows funders and stakeholders to verify the impact of their investments with immutable data and transparent auditing.",
+        "idealFor": "Impact investors, Development funds, Organizations requiring certified reporting.",
+        "status": "coming_soon"
+      }
+    ]
   },
   "allies_section": {
     "title": "Allies",

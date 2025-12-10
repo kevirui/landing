@@ -111,7 +111,53 @@
     "hero": {
       "title": "Serviços",
       "description": "Nossa tecnologia é modular. Oferecemos soluções específicas para resolver problemas críticos de gestão, identidade e validação."
-    }
+    },
+    "services": [
+      {
+        "id": "identity",
+        "title": "Identidade Digital Descentralizada (DID)",
+        "subtitle": "O passaporte digital para o desenvolvimento.",
+        "description": "Crie e gerencie identidades soberanas para beneficiários em áreas sem conectividade.",
+        "icon": "biometric.png",
+        "functionality": "Registro biométrico e documental offline que gera uma credencial verificável confidencial na blockchain.",
+        "advantage": "A possibilidade de vincular capacidades adquiridas às pessoas permite focalizar a implementação de projetos de impacto baseados em dados verificados e confidenciais.",
+        "idealFor": "ONGs, Governos, Programas de Inclusão Financeira.",
+        "status": "available"
+      },
+      {
+        "id": "documentation",
+        "title": "Documentação de Campo",
+        "subtitle": "Evidência imutável em tempo real.",
+        "description": "Capture e certifique atividades em território com provas geolocalizadas e sincronização automática.",
+        "icon": "doc.png",
+        "functionality": "Captura multimídia geolocalizada (fotos, áudio, relatórios) que é empacotada, criptografada e sincronizada automaticamente com IPFS e blockchain.",
+        "advantage": "Elimina a necessidade de processos manuais de verificação, reduzindo tempos e custos operacionais enquanto garante a autenticidade das evidências.",
+        "idealFor": "Projetos de campo, Auditorias, Programas de monitoramento e avaliação.",
+        "status": "available"
+      },
+      {
+        "id": "keybox",
+        "title": "KeyBox",
+        "subtitle": "Gestão segura de credenciais.",
+        "description": "Sistema de gestão de chaves e credenciais com criptografia de ponta a ponta para proteger dados sensíveis.",
+        "icon": "keyBox.png",
+        "functionality": "Armazenamento local e criptografado de chaves privadas com recuperação segura através de frases-semente e autenticação biométrica.",
+        "advantage": "Garante que os usuários mantenham controle total sobre suas credenciais sem depender de servidores centralizados, mesmo em ambientes offline.",
+        "idealFor": "Organizações que lidam com dados sensíveis, Programas de identidade digital.",
+        "status": "coming_soon"
+      },
+      {
+        "id": "analytics",
+        "title": "Analytics & Reporting",
+        "subtitle": "Métricas certificadas em blockchain.",
+        "description": "Dashboard de métricas em tempo real e geração automática de relatórios certificados para transparência total.",
+        "icon": "stats.png",
+        "functionality": "Visualização de KPIs em tempo real com geração automática de relatórios certificados em blockchain e exportação de dados.",
+        "advantage": "Permite que financiadores e stakeholders verifiquem o impacto de seus investimentos com dados imutáveis e auditoria transparente.",
+        "idealFor": "Investidores de impacto, Fundos de desenvolvimento, Organizações que requerem relatórios certificados.",
+        "status": "coming_soon"
+      }
+    ]
   },
   "allies_section": {
     "title": "Aliados",

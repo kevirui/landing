@@ -1,0 +1,204 @@
+---
+import ServiceCard from './ServiceCard.astro';
+
+interface Service {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+  functionality: string;
+  advantage: string;
+  idealFor: string;
+  status: 'available' | 'coming_soon';
+}
+
+interface Props {
+  services: Service[];
+}
+
+const { services } = Astro.props;
+---
+
+<section class="py-20">
+  <div class="container mx-auto px-4">
+    <!-- Services Carousel -->
+    <div class="relative max-w-4xl mx-auto">
+      <!-- Carousel Container -->
+      <div class="carousel-container relative overflow-hidden">
+        <div
+          class="carousel-track flex transition-transform duration-500 ease-in-out"
+        >
+          {
+            services.map((service, index) => (
+              <div class="carousel-slide min-w-full px-4">
+                <ServiceCard
+                  title={service.title}
+                  subtitle={service.subtitle}
+                  description={service.description}
+                  icon={service.icon}
+                  functionality={service.functionality}
+                  advantage={service.advantage}
+                  idealFor={service.idealFor}
+                  status={service.status}
+                  isActive={index === 0}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button
+        class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white/90 backdrop-blur-sm hover:bg-white text-[#7FA87F] rounded-full p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-10"
+        aria-label="Previous service"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <button
+        class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white/90 backdrop-blur-sm hover:bg-white text-[#7FA87F] rounded-full p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-10"
+        aria-label="Next service"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+
+      <!-- Dot Indicators -->
+      <div class="flex justify-center gap-3 mt-8">
+        {
+          services.map((_, index) => (
+            <button
+              class={`carousel-dot w-3 h-3 rounded-full transition-all duration-300 ${
+                index === 0
+                  ? 'bg-[#7FA87F] w-8'
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+              data-index={index}
+              aria-label={`Go to service ${index + 1}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Carousel functionality
+  const track = document.querySelector('.carousel-track') as HTMLElement;
+  const slides = document.querySelectorAll('.carousel-slide');
+  const prevButton = document.querySelector('.carousel-prev');
+  const nextButton = document.querySelector('.carousel-next');
+  const dots = document.querySelectorAll('.carousel-dot');
+
+  let currentIndex = 0;
+  const totalSlides = slides.length;
+
+  function updateCarousel() {
+    // Update track position
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    // Update dots
+    dots.forEach((dot, index) => {
+      if (index === currentIndex) {
+        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+        dot.classList.add('bg-[#7FA87F]', 'w-8');
+      } else {
+        dot.classList.remove('bg-[#7FA87F]', 'w-8');
+        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+      }
+    });
+  }
+
+  function goToSlide(index: number) {
+    currentIndex = index;
+    updateCarousel();
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  }
+
+  // Event listeners
+  prevButton?.addEventListener('click', prevSlide);
+  nextButton?.addEventListener('click', nextSlide);
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goToSlide(index));
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+
+  // Auto-play (optional - uncomment to enable)
+  // setInterval(nextSlide, 5000);
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  track?.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  track?.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchStartX - touchEndX > swipeThreshold) {
+      nextSlide();
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+      prevSlide();
+    }
+  }
+</script>
+
+<style>
+  .carousel-track {
+    will-change: transform;
+  }
+
+  .carousel-slide {
+    flex-shrink: 0;
+  }
+
+  /* Smooth dot transition */
+  .carousel-dot {
+    transition: all 0.3s ease;
+  }
+</style>
