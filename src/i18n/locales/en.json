@@ -83,7 +83,7 @@
     "home": "HOME",
     "about": "ABOUT",
     "model": "MODEL",
-    "applications": "APPLICATIONS"
+    "services": "SERVICES"
   },
   "about_page": {
     "title": "Team",
@@ -105,6 +105,12 @@
         "role": "Co-Founder &<br/>FullStack Engineer",
         "bio": "Directs design and frontend development. Responsible for user interface (Web and Mobile) and customer experience, translating complex technical requirements into intuitive management tools for field operators and investors."
       }
+    }
+  },
+  "services_page": {
+    "hero": {
+      "title": "Services",
+      "description": "Our technology is modular. We offer specific solutions to solve critical management, identity, and validation problems."
     }
   },
   "allies_section": {

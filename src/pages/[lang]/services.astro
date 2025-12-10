@@ -1,0 +1,43 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ServicesHero from '@components/Services/ServicesHero.astro';
+import type { Language } from '../../types/language.type';
+import es from '@i18n/locales/es.json';
+import en from '@i18n/locales/en.json';
+import pt from '@i18n/locales/pt.json';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { lang: 'es' },
+    },
+    {
+      params: { lang: 'en' },
+    },
+    {
+      params: { lang: 'pt' },
+    },
+  ];
+}
+
+const lang = Astro.params.lang as Language;
+const translations = { es, en, pt };
+const t = translations[lang];
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t.services_page.hero.title} - Key Protocol`}
+  footer={t.footer}
+>
+  <div id="hero" class="h-1"></div>
+
+  <ServicesHero
+    title={t.services_page.hero.title}
+    description={t.services_page.hero.description}
+  />
+
+  <!-- More sections will be added here -->
+</BaseLayout>

@@ -83,7 +83,7 @@
     "home": "INÍCIO",
     "about": "SOBRE",
     "model": "MODELO",
-    "applications": "APLICAÇÕES"
+    "services": "SERVIÇOS"
   },
   "about_page": {
     "title": "Equipe",
@@ -105,6 +105,12 @@
         "role": "Co-Founder &<br/>FullStack Engineer",
         "bio": "Dirige o design e desenvolvimento frontend. Responsável pela interface do usuário (Web e Mobile) e experiência do cliente, traduzindo requisitos técnicos complexos em ferramentas de gestão intuitivas para operadores de campo e investidores."
       }
+    }
+  },
+  "services_page": {
+    "hero": {
+      "title": "Serviços",
+      "description": "Nossa tecnologia é modular. Oferecemos soluções específicas para resolver problemas críticos de gestão, identidade e validação."
     }
   },
   "allies_section": {
