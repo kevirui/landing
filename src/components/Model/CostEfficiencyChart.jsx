@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   LineChart,
   Line,
@@ -31,6 +31,14 @@ const data = [
 ];
 
 const CostEfficiencyChart = ({ labels }) => {
+  // Check if we're in the browser (client-side) during initialization
+  // This avoids the cascading render issue from using useEffect + setState
+  const [isMounted] = useState(() => typeof window !== 'undefined');
+
+  if (!isMounted) {
+    return <div style={{ width: '100%', height: '100%' }} />;
+  }
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart

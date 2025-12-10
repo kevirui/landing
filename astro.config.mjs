@@ -12,7 +12,12 @@ const isPreview = process.env.ASTRO_PREVIEW === 'true';
 
 export default defineConfig({
   output: 'server',
-  adapter: isPreview ? node({ mode: 'standalone' }) : vercel({}),
+  adapter: isPreview
+    ? node({ mode: 'standalone' })
+    : vercel({
+        edgeMiddleware: false,
+        functionPerRoute: false,
+      }),
   integrations: [react()],
   build: {
     inlineStylesheets: 'auto',

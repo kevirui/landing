@@ -1,5 +1,84 @@
 {
   "title": "Key Protocol",
+  "model_page": {
+    "title": "Modelo",
+    "summary": {
+      "title": "Resumo",
+      "subtitle": "Infraestrutura de confiança para transformar a atividade em território em ativos digitais verificáveis.",
+      "description": "Nosso protocolo opera através de um ciclo de validação de três etapas que garante a integridade dos dados desde sua captura em zonas desconectadas até sua certificação na blockchain.",
+      "cards": {
+        "step_a": {
+          "title": "A. Registro Offline-First",
+          "description": "O técnico utiliza o Field App em território para gerar provas de vida e ação:",
+          "list": [
+            "Identidade: Registro biométrico e documental para criar Identidades Digitais (DID).",
+            "Evidência: Captura de fotos geolocalizadas, impressões digitais e relatórios de áudio que são empacotados e criptografados localmente no dispositivo."
+          ]
+        },
+        "step_b": {
+          "title": "B. Sincronização Imutável",
+          "description": "Ao recuperar conectividade, a aplicação sincroniza os pacotes de dados:",
+          "list": [
+            "IPFS (Armazenamento): Os arquivos de evidência são distribuídos em uma rede descentralizada, tornando-os incensuráveis.",
+            "Polkadot (Consenso): O hash criptográfico da operação é registrado, criando uma marca de tempo inalterável."
+          ]
+        },
+        "step_c": {
+          "title": "C. Validação Privada",
+          "list": [
+            "Computação Confidencial (Phala Network): Processamos os dados sensíveis em um ambiente seguro (TEE) para validar a consistência entre a identidade e a evidência sem expor a privacidade do beneficiário.",
+            "Resultado: Emissão de um Certificado Digital que libera os fundos e atualiza o dashboard do financiador."
+          ]
+        }
+      }
+    },
+    "management": {
+      "title": "Gestão",
+      "subtitle": "Um modelo financeiro projetado para maximizar o impacto: quanto maior o volume de gestão, menor é o custo do serviço.",
+      "description": "Na fase atual (Pre-Seed), a estrutura de custos fixos do protocolo representa uma porcentagem maior devido ao desenvolvimento intensivo. No entanto, nosso modelo B2I (Business to Institutions) é deflacionário para o cliente: ao adicionar mais ONGs à rede, o fundo de gestão cresce e o custo percentual do serviço é drasticamente reduzido.",
+      "efficiency": {
+        "title": "Projeção de Eficiência de Custos:",
+        "description": "Na fase atual (Pre-Seed), a estrutura de custos fixos do protocolo representa uma porcentagem maior devido ao desenvolvimento intensivo. No entanto, nosso modelo B2I (Business to Institutions) é deflacionário para o cliente: ao adicionar mais ONGs à rede, o fundo de gestão cresce e o custo percentual do serviço é drasticamente reduzido."
+      },
+      "pilot": {
+        "title": "Fase 1: Piloto",
+        "description": "Os 15% cobrem a estrutura técnica, legal e operacional inicial para validar o modelo.",
+        "nodes": {
+          "node1": "5 ONGs",
+          "node2": "$ 1.4 M + fundo",
+          "node3": "15.4% taxa",
+          "node4": "pre-seed"
+        }
+      },
+      "phases": [
+        {
+          "title": "Fase 1: Piloto",
+          "description": "Os 15% cobrem a estrutura técnica, legal e operacional inicial para validar o modelo.",
+          "nodes": ["5 ONGs", "$1.4 M + fundo", "15.4% taxa", "pre-seed"]
+        },
+        {
+          "title": "Fase 2: Escala",
+          "description": "Ao duplicar a rede, o custo do serviço cai quase pela metade, transferindo essa economia diretamente para o orçamento de impacto dos financiadores.",
+          "nodes": [
+            "12 ONGs",
+            "$3.4 M + fundo",
+            "~8.3% taxa",
+            "expansão regional"
+          ]
+        },
+        {
+          "title": "Fase 3: Consolidação",
+          "description": "Com o ecossistema consolidado, a eficiência operacional permite reduzir o custo para menos de 5%, maximizando os recursos que chegam efetivamente às comunidades.",
+          "nodes": ["25 ONGs", "$7 M + fundo", "<5% taxa", "ecossistema maduro"]
+        }
+      ],
+      "chart": {
+        "fondos": "fundos",
+        "ongs": "ONGs",
+        "fee": "taxa"
+      }
+    }
+  },
   "nav": {
     "home": "INÍCIO",
     "about": "SOBRE",
