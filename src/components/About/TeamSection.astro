@@ -4,6 +4,7 @@ import type { Language } from '@custom-types/index';
 import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
 import pt from '@i18n/locales/pt.json';
+import { TEAM_MEMBERS } from '@data/teamConfig';
 
 interface Props {
   lang: Language;
@@ -12,37 +13,6 @@ interface Props {
 const { lang } = Astro.props;
 const translations = { es, en, pt };
 const t = translations[lang];
-
-const teamData = [
-  {
-    id: 'martin',
-    name: 'Martín Lago',
-    image: '/imgs/we/martin.jpg',
-    linkedin: 'https://linkedin.com/in/martinlago',
-    linkedinProfile: 'martinlago',
-  },
-  {
-    id: 'andres',
-    name: 'Andres Chanchi',
-    image: '/imgs/we/andres.jpg',
-    linkedin: 'https://linkedin.com/in/andreschanchi',
-    linkedinProfile: 'andreschanchi',
-  },
-  {
-    id: 'mateo',
-    name: 'Mateo Rivera',
-    image: '/imgs/we/mateo.jpg',
-    linkedin: 'https://linkedin.com/in/facundo-mateo-rivera',
-    linkedinProfile: 'facundo-mateo-rivera',
-  },
-  {
-    id: 'kevin',
-    name: 'Kevin Ruiz',
-    image: '/imgs/we/kevin.jpg',
-    linkedin: 'https://linkedin.com/in/kevinagustin',
-    linkedinProfile: 'kevinagustin',
-  },
-] as const;
 ---
 
 <div class="container mx-auto px-4 pt-24 pb-16">
@@ -55,7 +25,7 @@ const teamData = [
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     {
-      teamData.map(member => (
+      TEAM_MEMBERS.map(member => (
         <TeamMember
           name={member.name}
           image={member.image}

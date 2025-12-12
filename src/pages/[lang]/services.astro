@@ -7,6 +7,7 @@ import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
 import pt from '@i18n/locales/pt.json';
 import Contact from '@components/Contact/Contact.astro';
+import { STATIC_PATHS } from '@data/languageConfig';
 
 export const prerender = true;
 
@@ -23,17 +24,7 @@ interface Service {
 }
 
 export function getStaticPaths() {
-  return [
-    {
-      params: { lang: 'es' },
-    },
-    {
-      params: { lang: 'en' },
-    },
-    {
-      params: { lang: 'pt' },
-    },
-  ];
+  return STATIC_PATHS;
 }
 
 const lang = Astro.params.lang as Language;

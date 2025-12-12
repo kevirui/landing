@@ -1,6 +1,7 @@
 ---
 import MetricCard from '@components/Impacto/MetricCard.astro';
 import MetricModal from '@components/Impacto/MetricModal.jsx';
+import { METRICS_CONFIG } from '@data/metricsConfig';
 
 interface Props {
   impacto: {
@@ -32,6 +33,14 @@ interface Props {
 }
 
 const { impacto } = Astro.props;
+
+const metricsData = METRICS_CONFIG.map(config => ({
+  ...config,
+  value: impacto.metrics[config.id as keyof typeof impacto.metrics].value,
+  label: impacto.metrics[config.id as keyof typeof impacto.metrics].label,
+  description:
+    impacto.metrics[config.id as keyof typeof impacto.metrics].description,
+}));
 ---
 
 <section
@@ -54,72 +63,31 @@ const { impacto } = Astro.props;
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-      <MetricCard
-        id="investment"
-        value={impacto.metrics.investment.value}
-        label={impacto.metrics.investment.label}
-        imageSrc="/imgs/index/image_1.jpg"
-        imageAlt="Agricultural field"
-      />
-      <MetricCard
-        id="savings"
-        value={impacto.metrics.savings.value}
-        label={impacto.metrics.savings.label}
-        imageSrc="/imgs/index/image_2.jpg"
-        imageAlt="Forest landscape"
-      />
-      <MetricCard
-        id="organizations"
-        value={impacto.metrics.organizations.value}
-        label={impacto.metrics.organizations.label}
-        imageSrc="/imgs/index/image_3.jpg"
-        imageAlt="Rural scene"
-      />
-      <MetricCard
-        id="identities"
-        value={impacto.metrics.identities.value}
-        label={impacto.metrics.identities.label}
-        imageSrc="/imgs/index/image_4.jpg"
-        imageAlt="Person working in field"
-      />
+      {
+        metricsData.map(metric => (
+          <MetricCard
+            id={metric.id}
+            value={metric.value}
+            label={metric.label}
+            imageSrc={metric.imageSrc}
+            imageAlt={metric.imageAlt}
+          />
+        ))
+      }
     </div>
 
-    <!-- Modals -->
-    <MetricModal
-      client:only="react"
-      id="investment"
-      value={impacto.metrics.investment.value}
-      label={impacto.metrics.investment.label}
-      description={impacto.metrics.investment.description}
-      imageSrc="/imgs/index/image_1.jpg"
-      imageAlt="Agricultural field"
-    />
-    <MetricModal
-      client:only="react"
-      id="savings"
-      value={impacto.metrics.savings.value}
-      label={impacto.metrics.savings.label}
-      description={impacto.metrics.savings.description}
-      imageSrc="/imgs/index/image_2.jpg"
-      imageAlt="Forest landscape"
-    />
-    <MetricModal
-      client:only="react"
-      id="organizations"
-      value={impacto.metrics.organizations.value}
-      label={impacto.metrics.organizations.label}
-      description={impacto.metrics.organizations.description}
-      imageSrc="/imgs/index/image_3.jpg"
-      imageAlt="Rural scene"
-    />
-    <MetricModal
-      client:only="react"
-      id="identities"
-      value={impacto.metrics.identities.value}
-      label={impacto.metrics.identities.label}
-      description={impacto.metrics.identities.description}
-      imageSrc="/imgs/index/image_4.jpg"
-      imageAlt="Person working in field"
-    />
+    {
+      metricsData.map(metric => (
+        <MetricModal
+          client:only="react"
+          id={metric.id}
+          value={metric.value}
+          label={metric.label}
+          description={metric.description}
+          imageSrc={metric.imageSrc}
+          imageAlt={metric.imageAlt}
+        />
+      ))
+    }
   </div>
 </section>

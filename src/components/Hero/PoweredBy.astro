@@ -1,28 +1,6 @@
 ---
 import PartnerLogo from '@components/common/PartnerLogo.astro';
-
-const allies = [
-  {
-    name: 'Fundación Gran Chaco',
-    logo: '/icons/partners/svg/fund.svg',
-    href: 'https://gran-chaco.org/es/home/',
-  },
-  {
-    name: 'UTN - Universidad Tecnológica Nacional',
-    logo: '/icons/partners/svg/utn.svg',
-    href: 'https://www.utn.edu.ar',
-  },
-  {
-    name: 'NerdConf',
-    logo: '/icons/partners/svg/nerdconf.svg',
-    href: 'https://nerdconf.com',
-  },
-  {
-    name: 'LatinHack',
-    logo: '/icons/partners/svg/latinhack.svg',
-    href: 'https://latinhack.io/',
-  },
-];
+import { PARTNERS } from '@data/partnersConfig';
 ---
 
 <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
@@ -36,8 +14,12 @@ const allies = [
     class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16"
   >
     {
-      allies.map(ally => (
-        <PartnerLogo src={ally.logo} alt={ally.name} href={ally.href} />
+      PARTNERS.map(partner => (
+        <PartnerLogo
+          src={partner.logo}
+          alt={partner.name}
+          href={partner.href}
+        />
       ))
     }
   </div>

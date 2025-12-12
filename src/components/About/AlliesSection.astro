@@ -4,6 +4,7 @@ import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
 import pt from '@i18n/locales/pt.json';
 import PartnerLogo from '@components/common/PartnerLogo.astro';
+import { PARTNERS } from '@data/partnersConfig';
 
 interface Props {
   lang: Language;
@@ -12,29 +13,6 @@ interface Props {
 const { lang } = Astro.props;
 const translations = { es, en, pt };
 const t = translations[lang];
-
-const allies = [
-  {
-    name: 'Fundación Gran Chaco',
-    logo: '/icons/partners/svg/fund.svg',
-    href: 'https://gran-chaco.org/es/home/',
-  },
-  {
-    name: 'UTN - Universidad Tecnológica Nacional',
-    logo: '/icons/partners/svg/utn.svg',
-    href: 'https://www.utn.edu.ar',
-  },
-  {
-    name: 'NerdConf',
-    logo: '/icons/partners/svg/nerdconf.svg',
-    href: 'https://nerdconf.com',
-  },
-  {
-    name: 'LatinHack',
-    logo: '/icons/partners/svg/latinhack.svg',
-    href: 'https://latinhack.io/',
-  },
-];
 ---
 
 <div class="container mx-auto px-4 py-16">
@@ -49,8 +27,12 @@ const allies = [
     class="flex flex-wrap items-center justify-center gap-8 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-20"
   >
     {
-      allies.map(ally => (
-        <PartnerLogo src={ally.logo} alt={ally.name} href={ally.href} />
+      PARTNERS.map(partner => (
+        <PartnerLogo
+          src={partner.logo}
+          alt={partner.name}
+          href={partner.href}
+        />
       ))
     }
   </div>

@@ -12,13 +12,13 @@ const { id, value, label, imageSrc, imageAlt } = Astro.props;
 
 <div
   id={`card-${id}`}
-  class="relative rounded-2xl overflow-hidden aspect-4/3 group border border-l-8 border-l-[#4A9B7F] cursor-pointer transition-transform hover:scale-105 active:scale-95"
+  class="relative rounded-2xl overflow-hidden aspect-4/3 group cursor-pointer transition-transform hover:scale-105 active:scale-95"
   onclick={`window.dispatchEvent(new CustomEvent('open-modal-${id}', { detail: { modalId: '${id}' } }))`}
 >
   <img
     src={imageSrc}
     alt={imageAlt}
-    class="absolute inset-0 w-full object-cover"
+    class="absolute inset-0 w-full h-full object-cover"
   />
   <div class="absolute inset-0 bg-linear-to-b from-black/60 to-black/40"></div>
   <div
