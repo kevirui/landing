@@ -14,24 +14,41 @@ interface Service {
 }
 
 interface Props {
+  title: string;
+  description: string;
   services: Service[];
 }
 
-const { services } = Astro.props;
+const { title, description, services } = Astro.props;
+
+const serviceColors = ['#7D9E64', '#3E6B2F', '#2E5E2B', '#284D21'];
 ---
 
-<section class="py-20">
+<section
+  class="services-section transition-colors duration-700 py-20"
+  data-current-index="0"
+>
   <div class="container mx-auto px-4">
+    <!-- Constant Title and Description -->
+    <div class="text-left mb-16 max-w-4xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+        {title}
+      </h2>
+      <p class="text-lg md:text-xl text-white/90 leading-relaxed">
+        {description}
+      </p>
+    </div>
+
     <!-- Services Carousel -->
     <div class="relative max-w-4xl mx-auto">
-      <!-- Carousel Container -->
-      <div class="carousel-container relative overflow-hidden">
-        <div
-          class="carousel-track flex transition-transform duration-500 ease-in-out"
-        >
+      <!-- Carousel Container with horizontal scroll -->
+      <div
+        class="carousel-container overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory hide-scrollbar"
+      >
+        <div class="carousel-track flex">
           {
             services.map((service, index) => (
-              <div class="carousel-slide min-w-full px-4">
+              <div class="carousel-slide min-w-full flex-shrink-0 px-4 snap-center">
                 <ServiceCard
                   title={service.title}
                   subtitle={service.subtitle}
@@ -49,100 +66,166 @@ const { services } = Astro.props;
         </div>
       </div>
 
-      <!-- Navigation Arrows -->
-      <button
-        class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white/90 backdrop-blur-sm hover:bg-white text-[#7FA87F] rounded-full p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-10"
-        aria-label="Previous service"
-      >
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      <!-- Scroll Indicators -->
+      <div class="mt-8 flex flex-col items-center gap-4">
+        <!-- Swipe Hint (fades out after interaction) -->
+        <p
+          class="swipe-hint text-white/70 text-sm animate-pulse transition-opacity duration-500"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
+          ← Desliza para ver más servicios →
+        </p>
 
-      <button
-        class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white/90 backdrop-blur-sm hover:bg-white text-[#7FA87F] rounded-full p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-10"
-        aria-label="Next service"
-      >
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
+        <!-- Dot Indicators -->
+        <div class="flex justify-center gap-3">
+          {
+            services.map((_, index) => (
+              <button
+                class={`carousel-dot w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === 0 ? 'bg-white w-8' : 'bg-white/40 hover:bg-white/60'
+                }`}
+                data-index={index}
+                aria-label={`Ir al servicio ${index + 1}`}
+              />
+            ))
+          }
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<script>
-  // Carousel functionality
-  const track = document.querySelector('.carousel-track') as HTMLElement;
+<script define:vars={{ serviceColors }}>
+  // Carousel functionality with scroll-based detection
+  const section = document.querySelector('.services-section');
+  const container = document.querySelector('.carousel-container');
+  const track = document.querySelector('.carousel-track');
   const slides = document.querySelectorAll('.carousel-slide');
-  const prevButton = document.querySelector('.carousel-prev');
-  const nextButton = document.querySelector('.carousel-next');
   const dots = document.querySelectorAll('.carousel-dot');
 
   let currentIndex = 0;
   const totalSlides = slides.length;
 
-  function updateCarousel() {
-    // Update track position
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  function updateIndicators(index) {
+    currentIndex = index;
+
+    // Update background color
+    if (section && serviceColors[currentIndex]) {
+      section.style.backgroundColor = serviceColors[currentIndex];
+      section.setAttribute('data-current-index', currentIndex.toString());
+    }
 
     // Update dots
-    dots.forEach((dot, index) => {
-      if (index === currentIndex) {
-        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
-        dot.classList.add('bg-[#7FA87F]', 'w-8');
+    dots.forEach((dot, dotIndex) => {
+      if (dotIndex === currentIndex) {
+        dot.classList.remove('bg-white/40', 'hover:bg-white/60');
+        dot.classList.add('bg-white', 'w-8');
       } else {
-        dot.classList.remove('bg-[#7FA87F]', 'w-8');
-        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+        dot.classList.remove('bg-white', 'w-8');
+        dot.classList.add('bg-white/40', 'hover:bg-white/60');
       }
     });
   }
 
-  function goToSlide(index: number) {
-    currentIndex = index;
-    updateCarousel();
+  function goToSlide(index) {
+    if (!container || !slides[index]) return;
+    const slideWidth = slides[0].offsetWidth;
+    container.scrollTo({
+      left: slideWidth * index,
+      behavior: 'smooth',
+    });
   }
 
   function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
-    updateCarousel();
+    const nextIndex = (currentIndex + 1) % totalSlides;
+    goToSlide(nextIndex);
   }
 
   function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateCarousel();
+    const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    goToSlide(prevIndex);
+  }
+
+  // Initialize background color
+  if (section && serviceColors[0]) {
+    section.style.backgroundColor = serviceColors[0];
+  }
+
+  // Detect which slide is currently visible and update indicators
+  function detectVisibleSlide() {
+    const container = document.querySelector('.carousel-container');
+    if (!container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
+
+    slides.forEach((slide, index) => {
+      const slideRect = slide.getBoundingClientRect();
+      const slideCenter = slideRect.left + slideRect.width / 2;
+      const distance = Math.abs(containerCenter - slideCenter);
+
+      // If this slide's center is closest to the container's center
+      if (distance < slideRect.width / 2) {
+        if (currentIndex !== index) {
+          currentIndex = index;
+
+          // Update background color
+          if (section && serviceColors[currentIndex]) {
+            section.style.backgroundColor = serviceColors[currentIndex];
+            section.setAttribute('data-current-index', currentIndex.toString());
+          }
+
+          // Update dots
+          dots.forEach((dot, dotIndex) => {
+            if (dotIndex === currentIndex) {
+              dot.classList.remove('bg-white/40', 'hover:bg-white/60');
+              dot.classList.add('bg-white', 'w-8');
+            } else {
+              dot.classList.remove('bg-white', 'w-8');
+              dot.classList.add('bg-white/40', 'hover:bg-white/60');
+            }
+          });
+        }
+      }
+    });
+  }
+
+  // Listen to scroll events
+  if (container) {
+    container.addEventListener('scroll', detectVisibleSlide);
+  }
+
+  // Swipe hint management
+  const swipeHint = document.querySelector('.swipe-hint');
+  let hasInteracted = false;
+
+  function hideSwipeHint() {
+    if (!hasInteracted && swipeHint) {
+      hasInteracted = true;
+      swipeHint.style.opacity = '0';
+      setTimeout(() => {
+        swipeHint.style.display = 'none';
+      }, 500);
+    }
   }
 
   // Event listeners
-  prevButton?.addEventListener('click', prevSlide);
-  nextButton?.addEventListener('click', nextSlide);
-
   dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goToSlide(index));
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+      hideSwipeHint();
+    });
   });
 
   // Keyboard navigation
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') prevSlide();
-    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      hideSwipeHint();
+    }
+    if (e.key === 'ArrowRight') {
+      nextSlide();
+      hideSwipeHint();
+    }
   });
 
   // Auto-play (optional - uncomment to enable)
@@ -165,15 +248,62 @@ const { services } = Astro.props;
     const swipeThreshold = 50;
     if (touchStartX - touchEndX > swipeThreshold) {
       nextSlide();
+      hideSwipeHint();
     } else if (touchEndX - touchStartX > swipeThreshold) {
       prevSlide();
+      hideSwipeHint();
     }
+  }
+
+  // Mouse drag support
+  let isDragging = false;
+  let mouseStartX = 0;
+  let mouseEndX = 0;
+
+  track?.addEventListener('mousedown', e => {
+    isDragging = true;
+    mouseStartX = e.clientX;
+    track.style.cursor = 'grabbing';
+    e.preventDefault(); // Prevent text selection
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    mouseEndX = e.clientX;
+  });
+
+  document.addEventListener('mouseup', e => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.cursor = 'grab';
+
+    const dragThreshold = 50;
+    const dragDistance = mouseStartX - mouseEndX;
+
+    if (dragDistance > dragThreshold) {
+      nextSlide();
+      hideSwipeHint();
+    } else if (dragDistance < -dragThreshold) {
+      prevSlide();
+      hideSwipeHint();
+    }
+
+    mouseStartX = 0;
+    mouseEndX = 0;
+  });
+
+  // Set initial cursor style
+  if (track) {
+    track.style.cursor = 'grab';
   }
 </script>
 
 <style>
   .carousel-track {
-    will-change: transform;
+    user-select: none; /* Prevent text selection during drag */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
 
   .carousel-slide {
@@ -183,5 +313,25 @@ const { services } = Astro.props;
   /* Smooth dot transition */
   .carousel-dot {
     transition: all 0.3s ease;
+  }
+
+  /* Hide scrollbar while maintaining scroll functionality */
+  .carousel-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* Smooth scroll behavior */
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 </style>

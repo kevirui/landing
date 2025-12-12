@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import ServicesHero from '@components/Services/ServicesHero.astro';
 import ServicesSection from '@components/Services/ServicesSection.astro';
 import type { Language } from '@custom-types/index';
 import es from '@i18n/locales/es.json';
@@ -40,11 +39,10 @@ const services = t.services_page.services as Service[];
 >
   <div id="hero" class="h-1"></div>
 
-  <ServicesHero
+  <ServicesSection
     title={t.services_page.hero.title}
     description={t.services_page.hero.description}
+    services={services}
   />
-
-  <ServicesSection services={services} />
   <Contact contact={t.contact} />
 </BaseLayout>
