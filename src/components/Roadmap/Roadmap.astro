@@ -1,5 +1,5 @@
 ---
-import RoadmapContainer from './RoadmapContainer.jsx';
+import RoadmapContainer from '@components/Roadmap/RoadmapContainer.jsx';
 
 interface Props {
   roadmap: {
@@ -38,7 +38,7 @@ const { roadmap } = Astro.props;
 
     <!-- Roadmap Container (Timeline + Carousel) -->
     <RoadmapContainer
-      client:load
+      client:only="react"
       quarters={roadmap.timeline.quarters}
       phases={roadmap.phases}
     />

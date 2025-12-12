@@ -1,6 +1,6 @@
 ---
-import MetricCard from './MetricCard.astro';
-import MetricModal from './MetricModal.jsx';
+import MetricCard from '@components/Impacto/MetricCard.astro';
+import MetricModal from '@components/Impacto/MetricModal.jsx';
 
 interface Props {
   impacto: {
@@ -86,7 +86,7 @@ const { impacto } = Astro.props;
 
     <!-- Modals -->
     <MetricModal
-      client:load
+      client:only="react"
       id="investment"
       value={impacto.metrics.investment.value}
       label={impacto.metrics.investment.label}
@@ -95,7 +95,7 @@ const { impacto } = Astro.props;
       imageAlt="Agricultural field"
     />
     <MetricModal
-      client:load
+      client:only="react"
       id="savings"
       value={impacto.metrics.savings.value}
       label={impacto.metrics.savings.label}
@@ -104,7 +104,7 @@ const { impacto } = Astro.props;
       imageAlt="Forest landscape"
     />
     <MetricModal
-      client:load
+      client:only="react"
       id="organizations"
       value={impacto.metrics.organizations.value}
       label={impacto.metrics.organizations.label}
@@ -113,7 +113,7 @@ const { impacto } = Astro.props;
       imageAlt="Rural scene"
     />
     <MetricModal
-      client:load
+      client:only="react"
       id="identities"
       value={impacto.metrics.identities.value}
       label={impacto.metrics.identities.label}

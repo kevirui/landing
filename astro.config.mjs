@@ -44,7 +44,10 @@ export default defineConfig({
           '../src/components'
         ),
         '@i18n': resolve(fileURLToPath(import.meta.url), '../src/i18n'),
-        '@types': resolve(fileURLToPath(import.meta.url), '../src/types'),
+        '@custom-types': resolve(
+          fileURLToPath(import.meta.url),
+          '../src/types'
+        ),
         '@utils': resolve(fileURLToPath(import.meta.url), '../src/utils'),
         '@hooks': resolve(fileURLToPath(import.meta.url), '../src/hooks'),
         '@contexts': resolve(fileURLToPath(import.meta.url), '../src/contexts'),

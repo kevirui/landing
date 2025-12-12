@@ -1,8 +1,8 @@
 ---
 import '@styles/index.css';
-import type { Language } from '../types/language.type';
-import Header from './Header.astro';
-import Footer from './Footer.astro';
+import type { Language } from '@custom-types/index';
+import Header from '@layouts/Header.astro';
+import Footer from '@layouts/Footer.astro';
 import BirthdayModal from '@components/common/BirthdayModal.jsx';
 
 interface Props {
@@ -19,7 +19,7 @@ import en from '@i18n/locales/en.json';
 import pt from '@i18n/locales/pt.json';
 
 const { lang, title, footer } = Astro.props;
-const translations = { es, en, pt };
+const translations: Record<Language, typeof es> = { es, en, pt };
 const t = translations[lang];
 ---
 

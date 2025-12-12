@@ -1,5 +1,5 @@
 ---
-import ContactInfoItem from './ContactInfoItem.astro';
+import ContactInfoItem from '@components/Contact/ContactInfoItem.astro';
 
 interface Props {
   title: string;
@@ -21,4 +21,3 @@ const { title, email, location } = Astro.props;
     <ContactInfoItem icon="location" text={location} />
   </div>
 </div>
-

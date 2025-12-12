@@ -10,7 +10,7 @@
       "@layouts/*": ["src/layouts/*"],
       "@components/*": ["src/components/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@types/*": ["src/types/*"],
+      "@custom-types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
       "@hooks/*": ["src/hooks/*"],
       "@contexts/*": ["src/contexts/*"],

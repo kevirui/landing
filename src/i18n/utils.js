@@ -1,7 +1,7 @@
-import { defaultLocale, locales } from './config.js';
-import esTranslations from './locales/es.json';
-import enTranslations from './locales/en.json';
-import ptTranslations from './locales/pt.json';
+import { defaultLocale, locales } from '@i18n/config.js';
+import esTranslations from '@i18n/locales/es.json';
+import enTranslations from '@i18n/locales/en.json';
+import ptTranslations from '@i18n/locales/pt.json';
 
 const translations = {
   es: esTranslations,

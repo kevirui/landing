@@ -1,6 +1,6 @@
 ---
-import ContactForm from './ContactForm.jsx';
-import FollowUs from './FollowUs.astro';
+import ContactForm from '@components/Contact/ContactForm.jsx';
+import FollowUs from '@components/Contact/FollowUs.astro';
 
 interface Props {
   contact: {
@@ -48,7 +48,7 @@ const { contact } = Astro.props;
     <div class="flex flex-col items-center gap-12 sm:gap-16 md:gap-20">
       <!-- Formulario centrado -->
       <div class="w-full max-w-md">
-        <ContactForm client:load form={contact.form} />
+        <ContactForm client:only="react" form={contact.form} />
       </div>
 
       <!-- Síguenos centrado -->
