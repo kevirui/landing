@@ -13,16 +13,12 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
 
   const currentPhase = phases[currentPhaseIndex];
 
-  // Determine node colors based on phase
   const getNodeVariant = index => {
     if (currentPhaseIndex === 0) {
-      // Phase 1: dark, light, dark, gray
       return index === 1 ? 'light' : index === 3 ? 'gray' : 'dark';
     } else if (currentPhaseIndex === 1) {
-      // Phase 2: light, dark, light, dark
       return index % 2 === 0 ? 'light' : 'dark';
     } else {
-      // Phase 3: dark, light, dark, light
       return index % 2 === 0 ? 'dark' : 'light';
     }
   };
@@ -33,14 +29,12 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
     } else if (variant === 'gray') {
       return 'bg-[#E8E8E8] text-black shadow-md';
     } else {
-      // Changed from dark green to a lighter teal/turquoise for better contrast
       return 'bg-[#4B9C8E] text-white shadow-lg';
     }
   };
 
   return (
     <div className="bg-[#1A5F38] rounded-2xl p-8 relative overflow-hidden">
-      {/* Title and Description with fade transition */}
       <div className="transition-opacity duration-500" key={currentPhaseIndex}>
         <h3 className="text-2xl font-bold mb-4 text-white">
           {currentPhase.title}
@@ -50,17 +44,14 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
         </p>
       </div>
 
-      {/* Nodes Container */}
       <div className="relative py-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 relative">
-          {/* Horizontal Dashed Path with Animated Arrows - Desktop Only */}
           <svg
             className="absolute top-1/2 left-0 w-full h-32 -translate-y-1/2 hidden md:block pointer-events-none"
             style={{ zIndex: 1 }}
             preserveAspectRatio="none"
             viewBox="0 0 1000 100"
           >
-            {/* Dashed Path - curved path connecting all nodes */}
             <path
               d="M 60 50 Q 200 20, 333 50 T 666 50 T 940 50"
               fill="none"
@@ -78,7 +69,6 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
               />
             </path>
 
-            {/* Animated Arrows traveling along the path */}
             {[0, 1, 2, 3, 4, 5, 6].map(i => (
               <g key={i}>
                 <polygon points="0,-6 15,0 0,6" fill="#4B9C8E">
@@ -88,7 +78,6 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
                     begin={`${i * 0.7}s`}
                     path="M 60 50 Q 200 20, 333 50 T 666 50 T 940 50"
                   />
-                  {/* Fade in at start, stay visible, fade out at end */}
                   <animate
                     attributeName="opacity"
                     values="0;1;1;0"
@@ -102,7 +91,6 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
             ))}
           </svg>
 
-          {/* Nodes */}
           {currentPhase.nodes.map((node, index) => {
             const variant = getNodeVariant(index);
             const nodeClasses = getNodeClasses(variant);
@@ -113,7 +101,6 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
                 className="relative flex flex-col items-center"
                 style={{ zIndex: 10 }}
               >
-                {/* Node Content */}
                 <div
                   className={`relative z-10 w-32 h-32 rounded-full flex items-center justify-center text-center p-4 transition-all duration-500 ${nodeClasses}`}
                 >
