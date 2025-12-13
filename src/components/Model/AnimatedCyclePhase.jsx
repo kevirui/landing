@@ -7,16 +7,19 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       setIsTransitioning(true);
+
       setTimeout(() => {
         setCurrentPhaseIndex(prevIndex => (prevIndex + 1) % phases.length);
-        setIsTransitioning(false);
-      }, 300);
+
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 100);
+      }, 400);
     }, interval);
 
     return () => clearInterval(timer);
   }, [phases.length, interval]);
 
-  // Calcular índices de las fases anterior, actual y siguiente
   const prevPhaseIndex =
     (currentPhaseIndex - 1 + phases.length) % phases.length;
   const nextPhaseIndex = (currentPhaseIndex + 1) % phases.length;
@@ -46,7 +49,6 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
   };
 
   const renderPhaseCard = (phase, phaseIndex, position) => {
-    // position: 'prev', 'current', 'next'
     const isCenter = position === 'current';
     const isPrev = position === 'prev';
     const isNext = position === 'next';
@@ -57,13 +59,31 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
         ? '-translate-x-[80%] scale-80 opacity-50 blur-[2px] z-10'
         : 'translate-x-[80%] scale-80 opacity-50 blur-[2px] z-10';
 
+    const contentOpacity =
+      isCenter && !isTransitioning
+        ? 'opacity-100'
+        : isCenter && isTransitioning
+          ? 'opacity-0'
+          : 'opacity-60';
+    const contentTransform =
+      isCenter && !isTransitioning
+        ? 'translate-y-0'
+        : isCenter && isTransitioning
+          ? 'translate-y-2'
+          : 'translate-y-0';
+
     return (
       <div
-        className={`absolute inset-0 transition-all duration-700 ease-in-out ${positionClasses}`}
-        style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
+        className={`absolute inset-0 transition-all duration-[800ms] ease-in-out ${positionClasses}`}
+        style={{
+          pointerEvents: isCenter ? 'auto' : 'none',
+          transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
       >
-        <div className="bg-[#1A5F38] rounded-2xl p-8 h-full">
-          <div className="transition-opacity duration-500">
+        <div className="bg-[#1A5F38] rounded-2xl p-8 h-full shadow-2xl">
+          <div
+            className={`transition-all duration-500 ease-in-out ${contentOpacity} ${contentTransform}`}
+          >
             <h3 className="text-2xl font-bold mb-4 text-white">
               {phase.title}
             </h3>
@@ -123,6 +143,13 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
                 const variant = getNodeVariant(phaseIndex, index);
                 const nodeClasses = getNodeClasses(variant);
 
+                const nodeAnimation =
+                  isCenter && !isTransitioning
+                    ? 'scale-100 opacity-100'
+                    : isCenter && isTransitioning
+                      ? 'scale-95 opacity-80'
+                      : 'scale-90 opacity-70';
+
                 return (
                   <div
                     key={index}
@@ -130,9 +157,13 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
                     style={{ zIndex: 10 }}
                   >
                     <div
-                      className={`relative z-10 w-32 h-32 rounded-full flex items-center justify-center text-center p-4 transition-all duration-500 ${nodeClasses}`}
+                      className={`relative z-10 w-32 h-32 rounded-full flex items-center justify-center text-center p-4 transition-all duration-500 ease-out ${nodeClasses} ${nodeAnimation}`}
+                      style={{
+                        transitionProperty:
+                          'transform, opacity, background-color, box-shadow',
+                      }}
                     >
-                      <span className="text-sm font-bold leading-tight">
+                      <span className="text-sm font-bold leading-tight transition-all duration-300">
                         {node}
                       </span>
                     </div>
@@ -151,13 +182,10 @@ const AnimatedCyclePhase = ({ phases, interval = 5000 }) => {
       className="relative w-full overflow-visible"
       style={{ minHeight: '500px' }}
     >
-      {/* Fase anterior (izquierda, borrosa) */}
       {renderPhaseCard(prevPhase, prevPhaseIndex, 'prev')}
 
-      {/* Fase actual (centro, nítida) */}
       {renderPhaseCard(currentPhase, currentPhaseIndex, 'current')}
 
-      {/* Fase siguiente (derecha, borrosa) */}
       {renderPhaseCard(nextPhase, nextPhaseIndex, 'next')}
     </div>
   );
