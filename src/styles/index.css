@@ -5,6 +5,18 @@
   --font-family-poppins: 'Poppins', sans-serif;
 
   --font-sans: var(--font-family-poppins);
+
+  --color-primary: hsl(104, 50%, 90%);
+  --color-secondary: hsl(104, 50%, 10%);
+  --color-tertiary: hsl(164, 80%, 20%);
+  --color-accent: hsl(44, 80%, 20%);
+}
+
+.dark {
+  --color-primary: hsl(104, 50%, 10%);
+  --color-secondary: hsl(104, 50%, 90%);
+  --color-tertiary: hsl(164, 80%, 80%);
+  --color-accent: hsl(44, 80%, 80%);
 }
 
 html {
