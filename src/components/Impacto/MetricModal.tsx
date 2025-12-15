@@ -1,5 +1,16 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
+interface MetricModalProps {
+  id: string;
+  value: string;
+  label: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+}
+
+type AnimationState = 'closed' | 'opening' | 'open' | 'closing';
+
 export default function MetricModal({
   id,
   value,
@@ -7,11 +18,12 @@ export default function MetricModal({
   description,
   imageSrc,
   imageAlt,
-}) {
+}: MetricModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [animationState, setAnimationState] = useState('closed'); // 'closed' | 'opening' | 'open' | 'closing'
-  const modalRef = useRef(null);
-  const animationTimeoutRef = useRef(null);
+  const [animationState, setAnimationState] =
+    useState<AnimationState>('closed');
+  const modalRef = useRef<HTMLDivElement>(null);
+  const animationTimeoutRef = useRef<number | null>(null);
 
   // Handle open/close transitions
   // This pattern is intentional for enter/exit animations - we need to synchronously
@@ -32,7 +44,7 @@ export default function MetricModal({
       });
     } else if (animationState === 'closing') {
       // Wait for animation to complete
-      animationTimeoutRef.current = setTimeout(() => {
+      animationTimeoutRef.current = window.setTimeout(() => {
         setAnimationState('closed');
       }, 300);
     }
@@ -47,21 +59,27 @@ export default function MetricModal({
 
   // Listen for open events from outside
   useEffect(() => {
-    const handleOpenModal = e => {
+    const handleOpenModal = (e: CustomEvent<{ modalId: string }>) => {
       if (e.detail?.modalId === id) {
         setIsOpen(true);
       }
     };
 
-    window.addEventListener(`open-modal-${id}`, handleOpenModal);
+    window.addEventListener(
+      `open-modal-${id}`,
+      handleOpenModal as EventListener
+    );
     return () => {
-      window.removeEventListener(`open-modal-${id}`, handleOpenModal);
+      window.removeEventListener(
+        `open-modal-${id}`,
+        handleOpenModal as EventListener
+      );
     };
   }, [id]);
 
   // Close modal when clicking outside
   useEffect(() => {
-    const handleClickOutside = e => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (modalRef.current && e.target === modalRef.current) {
         setIsOpen(false);
       }
@@ -75,7 +93,7 @@ export default function MetricModal({
 
   // Close modal with Escape key
   useEffect(() => {
-    const handleEscape = e => {
+    const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         setIsOpen(false);
       }

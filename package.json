@@ -12,10 +12,10 @@
     "build:preview": "cross-env ASTRO_PREVIEW=true astro build",
     "preview": "pnpm run build:preview && cross-env ASTRO_PREVIEW=true astro preview",
     "astro": "astro",
-    "lint": "eslint . --ext .js,.jsx,.astro",
-    "lint:fix": "eslint . --ext .js,.jsx,.astro --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx,astro,css,json}\"",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,astro,css,json}\""
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,astro,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,astro,css,json}\""
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -45,6 +45,7 @@
     "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-compiler": "19.1.0-rc.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "globals": "^16.5.0",
     "prettier": "^3.7.3",

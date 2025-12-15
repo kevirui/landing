@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
+import reactCompiler from 'eslint-plugin-react-compiler';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import astro from 'eslint-plugin-astro';
@@ -15,10 +16,11 @@ export default [
     ignores: ['node_modules/**', 'dist/**', '.astro/**', '.vercel/**'],
   },
   {
-    files: ['**/*.{js,jsx,mjs,cjs}'],
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     plugins: {
       react,
       'react-hooks': reactHooks,
+      'react-compiler': reactCompiler,
       prettier,
     },
     languageOptions: {
@@ -43,6 +45,7 @@ export default [
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
+      'react-compiler/react-compiler': 'warn',
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',

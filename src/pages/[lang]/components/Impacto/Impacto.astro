@@ -1,6 +1,6 @@
 ---
-import MetricCard from './MetricCard.astro';
-import MetricModal from '@components/Impacto/MetricModal.jsx';
+import MetricCard from '@components/Impacto/MetricCard.tsx';
+import MetricModal from '@components/Impacto/MetricModal.tsx';
 import { METRICS_CONFIG } from '@data/metricsConfig';
 
 interface Props {
@@ -58,13 +58,15 @@ const metricsData = METRICS_CONFIG.map(config => ({
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
       {
-        metricsData.map(metric => (
+        metricsData.map((metric, index) => (
           <MetricCard
+            client:visible
             id={metric.id}
             value={metric.value}
             label={metric.label}
             imageSrc={metric.imageSrc}
             imageAlt={metric.imageAlt}
+            index={index}
           />
         ))
       }
