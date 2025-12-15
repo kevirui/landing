@@ -114,8 +114,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   key={index}
                   className={`carousel-dot w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? 'bg-gray-900 w-8'
-                      : 'bg-gray-900/40 hover:bg-gray-900/60'
+                      ? 'bg-[#2D5A47] w-8'
+                      : 'bg-[#2D5A47]/40 hover:bg-[#2D5A47]/60'
                   }`}
                   data-index={index}
                   aria-label={`${ariaGoToService} ${index + 1}`}

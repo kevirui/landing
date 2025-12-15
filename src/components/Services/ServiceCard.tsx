@@ -30,7 +30,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   return (
     <div className="relative">
       <div className="mb-8 flex justify-center">
-        <div className="w-28 h-28 bg-gray-900/80 backdrop-blur-sm rounded-3xl flex items-center justify-center p-6 shadow-lg border border-gray-800/50">
+        <div className="w-28 h-28 bg-[#2D5A47] backdrop-blur-sm rounded-3xl flex items-center justify-center p-6 shadow-lg border border-[#2D5A47]">
           <img
             src={`/icons/services/${icon}`}
             alt={title}
