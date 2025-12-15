@@ -76,6 +76,30 @@
         "fondos": "fundos",
         "ongs": "ONGs",
         "fee": "taxa"
+      },
+      "proyeccion": {
+        "title": "Painel de Projeção KEY Protocol",
+        "subtitle": "Modelo de Financiamento P&D+i (DAO) e Eficiência de Escala.",
+        "globalLabel": "% Global",
+        "globalDescription": "Custo Total do Ecossistema (KEY + DAO) sobre Capital Gerenciado.",
+        "fundsManaged": "Fundos Gerenciados",
+        "keyCost": "Custo KEY",
+        "base": "Base",
+        "dao": "DAO",
+        "rndFund": "fundo P&D+i",
+        "chartTitle": "Distribuição do Orçamento Operacional",
+        "chartSubtitle": "Comparativo de Fundos (AUM) vs. Custos (KEY + DAO).",
+        "legendAUM": "Capital Gerenciado (AUM)",
+        "legendKeyCost": "Custo Operacional KEY",
+        "legendDAO": "Fundo P&D+i (DAO)",
+        "tableYear": "Ano",
+        "tableFunds": "Fundos (AUM)",
+        "tableKeyCost": "Custo KEY",
+        "tableDaoFund": "Fundo DAO",
+        "tableDaoDefinition": "Definição DAO",
+        "tableGlobalPercent": "% GLOBAL (Total/Fundos)",
+        "daoOnKey": "sobre KEY",
+        "ngosLabel": "ONGs"
       }
     }
   },

@@ -76,6 +76,30 @@
         "fondos": "funds",
         "ongs": "NGOs",
         "fee": "fee"
+      },
+      "proyeccion": {
+        "title": "KEY Protocol Projection Dashboard",
+        "subtitle": "R&D+i (DAO) Financing Model and Scale Efficiency.",
+        "globalLabel": "% Global",
+        "globalDescription": "Total Ecosystem Cost (KEY + DAO) over Managed Capital.",
+        "fundsManaged": "Managed Funds",
+        "keyCost": "KEY Cost",
+        "base": "Base",
+        "dao": "DAO",
+        "rndFund": "R&D+i fund",
+        "chartTitle": "Operating Budget Distribution",
+        "chartSubtitle": "Funds (AUM) vs. Costs (KEY + DAO) Comparison.",
+        "legendAUM": "Managed Capital (AUM)",
+        "legendKeyCost": "KEY Operating Cost",
+        "legendDAO": "R&D+i Fund (DAO)",
+        "tableYear": "Year",
+        "tableFunds": "Funds (AUM)",
+        "tableKeyCost": "KEY Cost",
+        "tableDaoFund": "DAO Fund",
+        "tableDaoDefinition": "DAO Definition",
+        "tableGlobalPercent": "% GLOBAL (Total/Funds)",
+        "daoOnKey": "on KEY",
+        "ngosLabel": "NGOs"
       }
     }
   },

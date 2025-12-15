@@ -1,6 +1,6 @@
 ---
 import AnimatedCyclePhase from '@components/Model/AnimatedCyclePhase.jsx';
-import ProyeccionDashboard from '@components/Model/ProyeccionDashboard';
+import ProyeccionDashboard from '@components/Model/ProyeccionDashboard.tsx';
 import type { Language } from '@custom-types/index';
 import es from '@i18n/locales/es.json';
 import en from '@i18n/locales/en.json';
@@ -14,6 +14,7 @@ const { lang } = Astro.props;
 const translations = { es, en, pt };
 const t = translations[lang];
 const content = t.model_page.management;
+const proyeccionTranslations = content.proyeccion;
 ---
 
 <section class="py-16 overflow-visible">
@@ -24,14 +25,12 @@ const content = t.model_page.management;
         {content.subtitle}
       </p>
 
-      {/* Intro Text */}
       <div class="mb-12">
         <p class="text-sm md:text-base mb-6">
           {content.description}
         </p>
       </div>
 
-      {/* Proyección de Eficiencia */}
       <div class="mb-8">
         <h3 class="text-xl font-bold mb-2">{content.efficiency.title}</h3>
         <p class="text-sm md:text-base">
@@ -40,17 +39,17 @@ const content = t.model_page.management;
       </div>
     </div>
 
-    {/* Section Split: Cycle + Chart */}
     <div class="grid grid-cols-1 lg:grid-cols-1 gap-12 w-full">
-      {/* Animated Cycle Phases */}
       <div class="w-full px-4 md:px-8 lg:px-16">
         <AnimatedCyclePhase phases={content.phases} client:visible />
       </div>
     </div>
 
-    {/* Proyección DAO Dashboard */}
     <div class="mt-16">
-      <ProyeccionDashboard client:visible />
+      <ProyeccionDashboard
+        translations={proyeccionTranslations}
+        client:visible
+      />
     </div>
   </div>
 </section>

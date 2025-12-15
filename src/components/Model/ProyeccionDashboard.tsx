@@ -1,3 +1,4 @@
+import { useMemo, useState, useEffect } from 'react';
 import {
   BarChart,
   Bar,
@@ -8,10 +9,17 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { Lightbulb } from 'lucide-react';
-import { formatCurrency } from '@/utils/formatters';
+import type { LabelProps } from 'recharts';
+import { formatCurrency } from '@utils/formatters';
+import ScenarioCard from './ScenarioCard';
 
-interface Scenario {
+interface ScenarioConfig {
+  year: number;
+  ngos: number;
+  daoPercentage: number;
+}
+
+export interface Scenario {
   year: number;
   ngos: number;
   funds: number;
@@ -34,228 +42,181 @@ interface ChartDataItem {
   daoShareLabel: string;
 }
 
-export default function ProyeccionDashboard() {
-  const baseFunds = 1440000;
+interface BarLabelProps extends LabelProps {
+  x?: number;
+  y?: number;
+  width?: number;
+  value?: number;
+  payload?: ChartDataItem;
+}
 
-  const calculateScenario = (
-    year: number,
-    ngos: number,
-    daoPercentageOverride: number
-  ): Scenario => {
-    const multiplier = ngos / 5;
-    const funds = baseFunds * multiplier;
+export interface ProyeccionTranslations {
+  title: string;
+  subtitle: string;
+  globalLabel: string;
+  globalDescription: string;
+  fundsManaged: string;
+  keyCost: string;
+  base: string;
+  dao: string;
+  rndFund: string;
+  chartTitle: string;
+  chartSubtitle: string;
+  legendAUM: string;
+  legendKeyCost: string;
+  legendDAO: string;
+  tableYear: string;
+  tableFunds: string;
+  tableKeyCost: string;
+  tableDaoFund: string;
+  tableDaoDefinition: string;
+  tableGlobalPercent: string;
+  daoOnKey: string;
+  ngosLabel: string;
+}
 
-    let keyTotalCost = 221800;
-    if (year === 2027) keyTotalCost = 221800 * 1.25;
-    if (year === 2028) keyTotalCost = 221800 * 1.25 * 1.25;
+interface ProyeccionDashboardProps {
+  translations: ProyeccionTranslations;
+  baseFunds?: number;
+  baseKeyCost?: number;
+  scenarios?: ScenarioConfig[];
+}
 
-    const daoAmount = keyTotalCost * (daoPercentageOverride / 100);
+const DEFAULT_SCENARIOS: ScenarioConfig[] = [
+  { year: 2026, ngos: 5, daoPercentage: 0 },
+  { year: 2027, ngos: 12, daoPercentage: 5.08 },
+  { year: 2028, ngos: 25, daoPercentage: 9.33 },
+];
 
-    const totalSystemCost = keyTotalCost + daoAmount;
-    const globalEfficiencyPct = (totalSystemCost / funds) * 100;
+export default function ProyeccionDashboard({
+  translations: t,
+  baseFunds = 1440000,
+  baseKeyCost = 221800,
+  scenarios = DEFAULT_SCENARIOS,
+}: ProyeccionDashboardProps) {
+  const [barSize, setBarSize] = useState(40);
 
-    const daoShareOfBudget =
-      daoAmount > 0
-        ? ((daoAmount / totalSystemCost) * 100).toFixed(1) + '%'
-        : '';
-
-    return {
-      year,
-      ngos,
-      funds,
-      keyTotalCost,
-      daoAmount,
-      totalSystemCost,
-      daoPercentageUsed: daoPercentageOverride,
-      globalEfficiencyPct,
-      daoShareOfBudget,
+  useEffect(() => {
+    const updateBarSize = () => {
+      if (window.innerWidth < 640) {
+        setBarSize(20);
+      } else if (window.innerWidth < 1024) {
+        setBarSize(30);
+      } else {
+        setBarSize(40);
+      }
     };
+
+    updateBarSize();
+    window.addEventListener('resize', updateBarSize);
+    return () => window.removeEventListener('resize', updateBarSize);
+  }, []);
+
+  const scenarioData = useMemo(() => {
+    const calculateScenario = (config: ScenarioConfig): Scenario => {
+      const { year, ngos, daoPercentage } = config;
+      const multiplier = ngos / 5;
+      const funds = baseFunds * multiplier;
+
+      let keyTotalCost = baseKeyCost;
+      if (year === 2027) keyTotalCost = baseKeyCost * 1.25;
+      if (year === 2028) keyTotalCost = baseKeyCost * 1.25 * 1.25;
+
+      const daoAmount = keyTotalCost * (daoPercentage / 100);
+      const totalSystemCost = keyTotalCost + daoAmount;
+      const globalEfficiencyPct = (totalSystemCost / funds) * 100;
+
+      const daoShareOfBudget =
+        daoAmount > 0
+          ? ((daoAmount / totalSystemCost) * 100).toFixed(1) + '%'
+          : '';
+
+      return {
+        year,
+        ngos,
+        funds,
+        keyTotalCost,
+        daoAmount,
+        totalSystemCost,
+        daoPercentageUsed: daoPercentage,
+        globalEfficiencyPct,
+        daoShareOfBudget,
+      };
+    };
+
+    return scenarios.map(calculateScenario);
+  }, [baseFunds, baseKeyCost, scenarios]);
+
+  const chartData: ChartDataItem[] = useMemo(
+    () =>
+      scenarioData.map(s => ({
+        name: s.year.toString(),
+        ngos: s.ngos,
+        Fondos: s.funds,
+        CostoKEY: s.keyTotalCost,
+        FondoDAO: s.daoAmount,
+        globalPct: s.globalEfficiencyPct.toFixed(2),
+        daoUsed: s.daoPercentageUsed,
+        daoShareLabel: s.daoShareOfBudget,
+      })),
+    [scenarioData]
+  );
+
+  const [scenario2026, scenario2027, scenario2028] = scenarioData;
+
+  const renderBarLabel = (props: BarLabelProps) => {
+    const { x = 0, y = 0, width = 0, value, payload } = props;
+    if (!value || value <= 0 || !payload) return null;
+    const labelText = payload.daoShareLabel || '';
+    return (
+      <text
+        x={x + width / 2}
+        y={y - 5}
+        fill="#fb923c"
+        textAnchor="middle"
+        fontSize={12}
+        fontWeight="bold"
+      >
+        {labelText}
+      </text>
+    );
   };
-
-  const scenario2026 = calculateScenario(2026, 5, 0);
-  const scenario2027 = calculateScenario(2027, 12, 5.08);
-  const scenario2028 = calculateScenario(2028, 25, 9.33);
-
-  const data = [scenario2026, scenario2027, scenario2028];
-
-  const chartData: ChartDataItem[] = data.map(s => ({
-    name: s.year.toString(),
-    ngos: s.ngos,
-    Fondos: s.funds,
-    CostoKEY: s.keyTotalCost,
-    FondoDAO: s.daoAmount,
-    globalPct: s.globalEfficiencyPct.toFixed(2),
-    daoUsed: s.daoPercentageUsed,
-    daoShareLabel: s.daoShareOfBudget,
-  }));
 
   return (
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row justify-between items-center bg-black/26 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-sm">
         <div>
-          <h3 className="text-2xl font-bold text-white">
-            Tablero de Proyección KEY Protocol
-          </h3>
-          <p className="text-slate-300 mt-1">
-            Modelo de Financiamiento I+D+i (DAO) y Eficiencia de Escala.
-          </p>
+          <h3 className="text-2xl font-bold text-white">{t.title}</h3>
+          <p className="text-slate-300 mt-1">{t.subtitle}</p>
         </div>
         <div className="mt-4 md:mt-0 bg-blue-900/50 px-4 py-2 rounded-lg border border-blue-500/30">
           <span className="text-xs font-bold text-blue-300 uppercase block mb-1">
-            % Global
+            {t.globalLabel}
           </span>
-          <span className="text-sm text-blue-100">
-            Costo Total del Ecosistema (KEY + DAO) sobre Capital Gestionado.
-          </span>
+          <span className="text-sm text-blue-100">{t.globalDescription}</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-black/26 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6">
-          <h4 className="text-xl font-bold text-white mb-2">
-            2026{' '}
-            <span className="text-sm font-normal text-slate-300">(5 ONGs)</span>
-          </h4>
-          <div className="text-xs text-slate-300 mb-4">
-            Fondos Gestionados:{' '}
-            <span className="text-white font-mono">
-              {formatCurrency(scenario2026.funds)}
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="p-3 bg-slate-100 rounded-lg">
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-xs text-slate-700 uppercase font-bold">
-                  Costo KEY
-                </div>
-                <span className="text-xs bg-slate-300 text-slate-800 px-2 rounded-full font-bold">
-                  Base
-                </span>
-              </div>
-              <div className="text-xl font-bold text-slate-900">
-                {formatCurrency(scenario2026.keyTotalCost)}
-              </div>
-            </div>
-
-            <div className="p-3 bg-slate-200/20 rounded-lg border border-slate-500/30">
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-xs text-slate-300 uppercase font-bold flex items-center gap-1">
-                  <Lightbulb size={12} /> DAO (0%)
-                </div>
-              </div>
-              <div className="text-xl font-bold text-slate-400">$0</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-black/26 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6">
-          <h4 className="text-xl font-bold text-white mb-2">
-            2027{' '}
-            <span className="text-sm font-normal text-slate-300">
-              (12 ONGs)
-            </span>
-          </h4>
-          <div className="text-xs text-slate-300 mb-4">
-            Fondos Gestionados:{' '}
-            <span className="text-white font-mono">
-              {formatCurrency(scenario2027.funds)}
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-xs text-indigo-800 uppercase font-bold">
-                  Costo KEY
-                </div>
-                <span className="text-xs bg-indigo-200 text-indigo-900 px-2 rounded-full font-bold">
-                  +25%
-                </span>
-              </div>
-              <div className="text-xl font-bold text-indigo-900">
-                {formatCurrency(scenario2027.keyTotalCost)}
-              </div>
-            </div>
-
-            <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-xs text-orange-800 uppercase font-bold flex items-center gap-1">
-                  <Lightbulb size={12} /> DAO
-                </div>
-                <span className="text-xs bg-orange-200 text-orange-900 px-2 rounded-full font-bold">
-                  {scenario2027.daoPercentageUsed}%
-                </span>
-              </div>
-              <div className="text-xl font-bold text-orange-700">
-                {formatCurrency(scenario2027.daoAmount)}
-              </div>
-              <div className="text-[10px] text-orange-600 mt-1">
-                fondo I+D+i
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-black/26 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6">
-          <h4 className="text-xl font-bold text-white mb-2">
-            2028{' '}
-            <span className="text-sm font-normal text-slate-300">
-              (25 ONGs)
-            </span>
-          </h4>
-          <div className="text-xs text-slate-300 mb-4">
-            Fondos Gestionados:{' '}
-            <span className="text-white font-mono">
-              {formatCurrency(scenario2028.funds)}
-            </span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="p-3 bg-green-50 rounded-lg border border-green-100">
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-xs text-green-800 uppercase font-bold">
-                  Costo KEY
-                </div>
-                <span className="text-xs bg-green-200 text-green-900 px-2 rounded-full font-bold">
-                  +25%
-                </span>
-              </div>
-              <div className="text-xl font-bold text-green-900">
-                {formatCurrency(scenario2028.keyTotalCost)}
-              </div>
-            </div>
-
-            <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
-              <div className="flex justify-between items-center mb-1">
-                <div className="text-xs text-orange-800 uppercase font-bold flex items-center gap-1">
-                  <Lightbulb size={12} /> DAO
-                </div>
-                <span className="text-xs bg-orange-200 text-orange-900 px-2 rounded-full font-bold">
-                  {scenario2028.daoPercentageUsed}%
-                </span>
-              </div>
-              <div className="text-2xl font-bold text-orange-700">
-                {formatCurrency(scenario2028.daoAmount)}
-              </div>
-              <div className="text-[10px] text-orange-600 mt-1">
-                fondo I+D+i
-              </div>
-            </div>
-          </div>
-        </div>
+        <ScenarioCard scenario={scenario2026} translations={t} variant="base" />
+        <ScenarioCard
+          scenario={scenario2027}
+          translations={t}
+          variant="scale"
+        />
+        <ScenarioCard
+          scenario={scenario2028}
+          translations={t}
+          variant="mature"
+        />
       </div>
 
       <div className="bg-black/26 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-sm">
-        <h4 className="text-lg font-bold text-white mb-2">
-          Distribución del Presupuesto Operativo
-        </h4>
-        <p className="text-sm text-slate-300 mb-6">
-          Comparativa de Fondos (AUM) vs. Costos (KEY + DAO).
-        </p>
+        <h4 className="text-lg font-bold text-white mb-2">{t.chartTitle}</h4>
+        <p className="text-sm text-slate-300 mb-6">{t.chartSubtitle}</p>
 
-        <div className="h-96 w-full">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-96 w-full min-w-[300px]">
+          <ResponsiveContainer width="100%" height="100%" minWidth={300}>
             <BarChart
               data={chartData}
               margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
@@ -299,43 +260,27 @@ export default function ProyeccionDashboard() {
 
               <Bar
                 dataKey="Fondos"
-                name="Capital Gestionado (AUM)"
+                name={t.legendAUM}
                 fill="#4ade80"
                 radius={[4, 4, 0, 0]}
-                barSize={40}
+                barSize={barSize}
               />
 
               <Bar
                 dataKey="CostoKEY"
-                name="Costo Operativo KEY"
+                name={t.legendKeyCost}
                 stackId="a"
                 fill="#818cf8"
-                barSize={40}
+                barSize={barSize}
               />
               <Bar
                 dataKey="FondoDAO"
-                name="Fondo I+D+i (DAO)"
+                name={t.legendDAO}
                 stackId="a"
                 fill="#fb923c"
                 radius={[4, 4, 0, 0]}
-                barSize={40}
-                label={(props: any) => {
-                  const { x, y, width, value, payload } = props;
-                  if (!value || value <= 0 || !payload) return null;
-                  const labelText = payload.daoShareLabel || '';
-                  return (
-                    <text
-                      x={x + width / 2}
-                      y={y - 5}
-                      fill="#fb923c"
-                      textAnchor="middle"
-                      fontSize={12}
-                      fontWeight="bold"
-                    >
-                      {labelText}
-                    </text>
-                  );
-                }}
+                barSize={barSize}
+                label={renderBarLabel}
               />
             </BarChart>
           </ResponsiveContainer>
@@ -346,13 +291,15 @@ export default function ProyeccionDashboard() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="text-slate-300 text-xs uppercase border-b border-slate-600">
-              <th className="py-3 px-4">Año</th>
-              <th className="py-3 px-4">Fondos (AUM)</th>
-              <th className="py-3 px-4 text-indigo-300">Costo KEY</th>
-              <th className="py-3 px-4 text-orange-300">Fondo DAO</th>
-              <th className="py-3 px-4 text-orange-300">Definición DAO</th>
+              <th className="py-3 px-4">{t.tableYear}</th>
+              <th className="py-3 px-4">{t.tableFunds}</th>
+              <th className="py-3 px-4 text-indigo-300">{t.tableKeyCost}</th>
+              <th className="py-3 px-4 text-orange-300">{t.tableDaoFund}</th>
+              <th className="py-3 px-4 text-orange-300">
+                {t.tableDaoDefinition}
+              </th>
               <th className="py-3 px-4 text-green-400 font-extrabold">
-                % GLOBAL (Total/Fondos)
+                {t.tableGlobalPercent}
               </th>
             </tr>
           </thead>
@@ -363,7 +310,7 @@ export default function ProyeccionDashboard() {
                 className="border-b border-slate-600 hover:bg-white/5"
               >
                 <td className="py-4 px-4 font-bold text-white">
-                  {row.name} ({row.ngos} ONGs)
+                  {row.name} ({row.ngos} {t.ngosLabel})
                 </td>
                 <td className="py-4 px-4 font-mono text-green-400">
                   {formatCurrency(row.Fondos)}
@@ -375,7 +322,7 @@ export default function ProyeccionDashboard() {
                   {formatCurrency(row.FondoDAO)}
                 </td>
                 <td className="py-4 px-4 text-orange-300 text-xs">
-                  {row.daoUsed}% sobre KEY
+                  {row.daoUsed}% {t.daoOnKey}
                 </td>
                 <td className="py-4 px-4 font-bold text-green-400 text-lg">
                   {row.globalPct}%

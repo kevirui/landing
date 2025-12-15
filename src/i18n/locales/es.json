@@ -143,7 +143,31 @@
         "title": "Fase 1: Piloto"
       },
       "subtitle": "Un modelo financiero diseñado para maximizar el impacto: a mayor volumen de gestión, menor es el costo del servicio.",
-      "title": "Gestión"
+      "title": "Gestión",
+      "proyeccion": {
+        "title": "Tablero de Proyección KEY Protocol",
+        "subtitle": "Modelo de Financiamiento I+D+i (DAO) y Eficiencia de Escala.",
+        "globalLabel": "% Global",
+        "globalDescription": "Costo Total del Ecosistema (KEY + DAO) sobre Capital Gestionado.",
+        "fundsManaged": "Fondos Gestionados",
+        "keyCost": "Costo KEY",
+        "base": "Base",
+        "dao": "DAO",
+        "rndFund": "fondo I+D+i",
+        "chartTitle": "Distribución del Presupuesto Operativo",
+        "chartSubtitle": "Comparativa de Fondos (AUM) vs. Costos (KEY + DAO).",
+        "legendAUM": "Capital Gestionado (AUM)",
+        "legendKeyCost": "Costo Operativo KEY",
+        "legendDAO": "Fondo I+D+i (DAO)",
+        "tableYear": "Año",
+        "tableFunds": "Fondos (AUM)",
+        "tableKeyCost": "Costo KEY",
+        "tableDaoFund": "Fondo DAO",
+        "tableDaoDefinition": "Definición DAO",
+        "tableGlobalPercent": "% GLOBAL (Total/Fondos)",
+        "daoOnKey": "sobre KEY",
+        "ngosLabel": "ONGs"
+      }
     },
     "summary": {
       "cards": {
