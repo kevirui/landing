@@ -11,11 +11,14 @@ interface Props {
 }
 
 const { lang, isHomePage = false } = Astro.props;
+
+const positionClass = isHomePage ? 'fixed' : 'sticky';
+const translateClass = isHomePage ? '-translate-y-full' : 'translate-y-0';
 ---
 
 <header
   id="main-header"
-  class={`w-full text-white backdrop-blur-sm ${isHomePage ? 'fixed' : 'sticky'} top-0 z-50 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 transition-transform duration-300 ${isHomePage ? '-translate-y-full' : 'translate-y-0'}`}
+  class={`w-full text-white ${positionClass} top-0 z-50 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 transition-transform duration-300 ${translateClass} bg-primary-dark dark:bg-primary`}
   data-is-home={isHomePage}
 >
   <div class="max-w-7xl mx-auto grid grid-cols-3 items-center gap-2 sm:gap-4">

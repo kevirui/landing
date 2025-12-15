@@ -4,6 +4,7 @@ import RoadmapContainer from '@components/Roadmap/RoadmapContainer.jsx';
 interface Props {
   roadmap: {
     title: string;
+    keyFeaturesLabel: string;
     timeline: {
       quarters: Array<{
         label: string;
@@ -38,6 +39,7 @@ const { roadmap } = Astro.props;
       client:only="react"
       quarters={roadmap.timeline.quarters}
       phases={roadmap.phases}
+      keyFeaturesLabel={roadmap.keyFeaturesLabel}
     />
   </div>
 </section>

@@ -226,6 +226,7 @@
   },
   "roadmap": {
     "title": "Roadmap",
+    "keyFeaturesLabel": "Características principais:",
     "timeline": {
       "quarters": [
         {

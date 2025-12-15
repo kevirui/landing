@@ -184,6 +184,7 @@
     "services": "SERVICIOS"
   },
   "roadmap": {
+    "keyFeaturesLabel": "Características clave:",
     "phases": [
       {
         "description": "Implementación del protocolo base y sistema de validación offline",

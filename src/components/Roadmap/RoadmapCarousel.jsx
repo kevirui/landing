@@ -4,16 +4,27 @@ import {
   useRef,
   useImperativeHandle,
   forwardRef,
+  useCallback,
 } from 'react';
+import RoadmapCard from './RoadmapCard.jsx';
 
 const RoadmapCarousel = forwardRef(
-  ({ phases, quarters, currentIndex: externalIndex, onIndexChange }, ref) => {
-    const [currentIndex, setCurrentIndex] = useState(externalIndex ?? 0);
+  (
+    {
+      phases,
+      quarters,
+      currentIndex: externalIndex,
+      onIndexChange,
+      keyFeaturesLabel = 'Características clave:',
+    },
+    ref
+  ) => {
+    // Use external index as source of truth when available
+    const currentIndex = externalIndex ?? 0;
     const [mouseStart, setMouseStart] = useState(null);
     const [mouseEnd, setMouseEnd] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const carouselRef = useRef(null);
-    const prevExternalIndexRef = useRef(externalIndex);
     const currentIndexRef = useRef(currentIndex);
     const touchStartRef = useRef(null);
     const touchEndRef = useRef(null);
@@ -26,6 +37,16 @@ const RoadmapCarousel = forwardRef(
     useEffect(() => {
       currentIndexRef.current = currentIndex;
     }, [currentIndex]);
+
+    // Navigation helper function
+    const navigateTo = useCallback(
+      newIndex => {
+        if (newIndex >= 0 && newIndex < phases.length) {
+          onIndexChange?.(newIndex);
+        }
+      },
+      [phases.length, onIndexChange]
+    );
 
     // Touch handlers
     const onTouchStart = e => {
@@ -48,7 +69,7 @@ const RoadmapCarousel = forwardRef(
       touchEndRef.current = touch.clientX;
     };
 
-    const onTouchEnd = () => {
+    const onTouchEnd = useCallback(() => {
       if (touchStartRef.current === null || touchEndRef.current === null) {
         touchStartRef.current = null;
         touchEndRef.current = null;
@@ -60,25 +81,16 @@ const RoadmapCarousel = forwardRef(
       const isRightSwipe = distance < -minSwipeDistance;
       const currentIdx = currentIndexRef.current;
 
-      if (isLeftSwipe && currentIdx < phases.length - 1) {
-        const newIndex = currentIdx + 1;
-        setCurrentIndex(newIndex);
-        if (onIndexChange) {
-          onIndexChange(newIndex);
-        }
-      }
-      if (isRightSwipe && currentIdx > 0) {
-        const newIndex = currentIdx - 1;
-        setCurrentIndex(newIndex);
-        if (onIndexChange) {
-          onIndexChange(newIndex);
-        }
+      if (isLeftSwipe) {
+        navigateTo(currentIdx + 1);
+      } else if (isRightSwipe) {
+        navigateTo(currentIdx - 1);
       }
 
       touchStartRef.current = null;
       touchEndRef.current = null;
       touchStartY.current = null;
-    };
+    }, [navigateTo]);
 
     // Mouse handlers for desktop drag
     const onMouseDown = e => {
@@ -93,7 +105,7 @@ const RoadmapCarousel = forwardRef(
       setMouseEnd(e.clientX);
     };
 
-    const onMouseUp = () => {
+    const onMouseUp = useCallback(() => {
       if (!mouseStart || !mouseEnd) {
         setIsDragging(false);
         return;
@@ -102,25 +114,16 @@ const RoadmapCarousel = forwardRef(
       const isLeftSwipe = distance > minSwipeDistance;
       const isRightSwipe = distance < -minSwipeDistance;
 
-      if (isLeftSwipe && currentIndex < phases.length - 1) {
-        const newIndex = currentIndex + 1;
-        setCurrentIndex(newIndex);
-        if (onIndexChange) {
-          onIndexChange(newIndex);
-        }
-      }
-      if (isRightSwipe && currentIndex > 0) {
-        const newIndex = currentIndex - 1;
-        setCurrentIndex(newIndex);
-        if (onIndexChange) {
-          onIndexChange(newIndex);
-        }
+      if (isLeftSwipe) {
+        navigateTo(currentIndex + 1);
+      } else if (isRightSwipe) {
+        navigateTo(currentIndex - 1);
       }
 
       setIsDragging(false);
       setMouseStart(null);
       setMouseEnd(null);
-    };
+    }, [mouseStart, mouseEnd, currentIndex, navigateTo]);
 
     // Register touch event listeners manually with passive: false
     useEffect(() => {
@@ -137,8 +140,7 @@ const RoadmapCarousel = forwardRef(
         element.removeEventListener('touchmove', onTouchMove);
         element.removeEventListener('touchend', onTouchEnd);
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [phases.length]);
+    }, [onTouchEnd]);
 
     // Prevent text selection while dragging
     useEffect(() => {
@@ -158,47 +160,21 @@ const RoadmapCarousel = forwardRef(
     // Keyboard navigation
     useEffect(() => {
       const handleKeyDown = e => {
-        if (e.key === 'ArrowLeft' && currentIndex > 0) {
-          const newIndex = currentIndex - 1;
-          setCurrentIndex(newIndex);
-          if (onIndexChange) {
-            onIndexChange(newIndex);
-          }
-        } else if (e.key === 'ArrowRight' && currentIndex < phases.length - 1) {
-          const newIndex = currentIndex + 1;
-          setCurrentIndex(newIndex);
-          if (onIndexChange) {
-            onIndexChange(newIndex);
-          }
+        if (e.key === 'ArrowLeft') {
+          navigateTo(currentIndex - 1);
+        } else if (e.key === 'ArrowRight') {
+          navigateTo(currentIndex + 1);
         }
       };
 
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentIndex, phases.length, onIndexChange]);
-
-    // Sync with external index if provided
-    useEffect(() => {
-      if (
-        externalIndex !== undefined &&
-        externalIndex !== prevExternalIndexRef.current &&
-        externalIndex !== currentIndex
-      ) {
-        prevExternalIndexRef.current = externalIndex;
-        // Defer state update to avoid synchronous setState in effect
-        window.setTimeout(() => {
-          setCurrentIndex(externalIndex);
-        }, 0);
-      }
-    }, [externalIndex, currentIndex]);
+    }, [currentIndex, navigateTo]);
 
     // Expose goToSlide to parent component via ref
     useImperativeHandle(ref, () => ({
       goToSlide: index => {
-        setCurrentIndex(index);
-        if (onIndexChange) {
-          onIndexChange(index);
-        }
+        navigateTo(index);
       },
       getCurrentIndex: () => currentIndex,
     }));
@@ -223,78 +199,17 @@ const RoadmapCarousel = forwardRef(
             }}
           >
             {phases.map((phase, index) => {
-              const currentQuarter = quarters[index];
+              const phaseId = phase.id || `phase-${index}`;
               return (
                 <div
-                  key={index}
+                  key={phaseId}
                   className="min-w-full shrink-0 px-2 sm:px-3 md:px-6 flex justify-center"
                 >
-                  <div className="roadmap-card bg-white dark:bg-[#1B4D3E] rounded-xl sm:rounded-2xl md:rounded-3xl shadow-xl p-4 sm:p-5 md:p-8 lg:p-10 w-full max-w-[320px] sm:max-w-[400px] md:max-w-2xl lg:max-w-4xl mx-auto flex flex-col">
-                    {/* Header with quarter tag */}
-                    <div className="flex justify-between items-start mb-4 sm:mb-5 md:mb-6">
-                      {currentQuarter && (
-                        <span className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-lg text-xs sm:text-sm md:text-base font-semibold text-white bg-[#10260d]">
-                          {currentQuarter.label}
-                        </span>
-                      )}
-                      <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center bg-[#10260d]">
-                        <svg
-                          className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-
-                    {/* Card Title */}
-                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-montserrat font-bold mb-2 sm:mb-3 md:mb-4 leading-tight">
-                      {phase.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-5 sm:mb-6 md:mb-7 leading-relaxed">
-                      {phase.description}
-                    </p>
-
-                    {/* Key Features Section */}
-                    <div>
-                      <h4 className="text-sm sm:text-base md:text-lg font-semibold mb-3.5 sm:mb-4 md:mb-5">
-                        Características clave:
-                      </h4>
-                      <div className="space-y-3 sm:space-y-3.5 md:space-y-4">
-                        {phase.milestones.map((milestone, milestoneIndex) => (
-                          <div
-                            key={milestoneIndex}
-                            className="flex items-start gap-3 sm:gap-3.5 md:gap-4"
-                          >
-                            <div
-                              className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full mt-1.5 sm:mt-2 md:mt-2.5 shrink-0"
-                              style={{
-                                backgroundColor: 'var(--color-tertiary)',
-                              }}
-                            ></div>
-                            <p
-                              className="text-sm sm:text-base md:text-lg lg:text-xl flex-1 leading-relaxed"
-                              style={{
-                                wordBreak: 'break-word',
-                                overflowWrap: 'break-word',
-                              }}
-                            >
-                              {milestone.text}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  <RoadmapCard
+                    phase={phase}
+                    quarter={quarters[index]}
+                    keyFeaturesLabel={keyFeaturesLabel}
+                  />
                 </div>
               );
             })}

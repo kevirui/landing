@@ -1,5 +1,4 @@
 ---
-import ChartSection from './ChartSection.astro';
 import AnimatedCyclePhase from '@components/Model/AnimatedCyclePhase.jsx';
 import type { Language } from '@custom-types/index';
 import es from '@i18n/locales/es.json';
@@ -45,11 +44,6 @@ const content = t.model_page.management;
       {/* Animated Cycle Phases */}
       <div class="w-full px-4 md:px-8 lg:px-16">
         <AnimatedCyclePhase phases={content.phases} client:visible />
-      </div>
-
-      {/* Bottom: Chart */}
-      <div class="max-w-5xl mx-auto">
-        <ChartSection labels={content.chart} />
       </div>
     </div>
   </div>
