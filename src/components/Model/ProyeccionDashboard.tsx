@@ -184,7 +184,7 @@ export default function ProyeccionDashboard({
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row justify-between items-center bg-black/26 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-center bg-black/80 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-sm">
         <div>
           <h3 className="text-2xl font-bold text-white">{t.title}</h3>
           <p className="text-slate-300 mt-1">{t.subtitle}</p>
@@ -211,7 +211,7 @@ export default function ProyeccionDashboard({
         />
       </div>
 
-      <div className="bg-black/26 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-sm">
+      <div className="bg-black/80 backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-sm">
         <h4 className="text-lg font-bold text-white mb-2">{t.chartTitle}</h4>
         <p className="text-sm text-slate-300 mb-6">{t.chartSubtitle}</p>
 
@@ -287,7 +287,7 @@ export default function ProyeccionDashboard({
         </div>
       </div>
 
-      <div className="bg-black/26 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6 overflow-x-auto">
+      <div className="bg-black/80 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6 overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="text-slate-300 text-xs uppercase border-b border-slate-600">

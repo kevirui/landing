@@ -42,7 +42,7 @@ export default function ScenarioCard({
   const styles = variantStyles[variant];
 
   return (
-    <div className="bg-black/26 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6">
+    <div className="bg-black/80 backdrop-blur-sm border border-white/10 rounded-xl shadow-sm p-6">
       <h4 className="text-xl font-bold text-white mb-2">
         {scenario.year}{' '}
         <span className="text-sm font-normal text-slate-300">
