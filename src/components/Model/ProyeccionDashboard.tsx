@@ -12,6 +12,7 @@ import {
 import type { LabelProps } from 'recharts';
 import { formatCurrency } from '@utils/formatters';
 import ScenarioCard from './ScenarioCard';
+import PhaseCard from './PhaseCard';
 
 interface ScenarioConfig {
   year: number;
@@ -73,6 +74,13 @@ export interface ProyeccionTranslations {
   tableGlobalPercent: string;
   daoOnKey: string;
   ngosLabel: string;
+  phaseLabel?: string;
+  phaseNames?: {
+    base: string;
+    scale: string;
+    mature: string;
+  };
+  phases?: Array<{ description: string }>;
 }
 
 interface ProyeccionDashboardProps {
@@ -196,6 +204,36 @@ export default function ProyeccionDashboard({
           <span className="text-sm text-blue-100">{t.globalDescription}</span>
         </div>
       </div>
+
+      {/* Phases Cards */}
+      {t.phases && t.phases.length === 3 && t.phaseLabel && t.phaseNames && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <PhaseCard
+            phase={1}
+            description={t.phases[0].description}
+            variant="base"
+            year={2026}
+            phaseLabel={t.phaseLabel}
+            phaseName={t.phaseNames.base}
+          />
+          <PhaseCard
+            phase={2}
+            description={t.phases[1].description}
+            variant="scale"
+            year={2027}
+            phaseLabel={t.phaseLabel}
+            phaseName={t.phaseNames.scale}
+          />
+          <PhaseCard
+            phase={3}
+            description={t.phases[2].description}
+            variant="mature"
+            year={2028}
+            phaseLabel={t.phaseLabel}
+            phaseName={t.phaseNames.mature}
+          />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <ScenarioCard scenario={scenario2026} translations={t} variant="base" />

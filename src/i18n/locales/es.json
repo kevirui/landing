@@ -106,46 +106,10 @@
         "ongs": "ONGs"
       },
       "description": "En la fase actual (Pre-Seed), la estructura de costos fijos del protocolo representa un porcentaje mayor debido al desarrollo intensivo. Sin embargo, nuestro modelo B2I (Business to Institutions) es deflacionario para el cliente: al sumar más ONGs a la red, el fondo de gestión crece y el costo porcentual del servicio se reduce drásticamente.",
-      "efficiency": {
-        "description": "En la fase actual (Pre-Seed), la estructura de costos fijos del protocolo representa un porcentaje mayor debido al desarrollo intensivo. Sin embargo, nuestro modelo B2I (Business to Institutions) es deflacionario para el cliente: al sumar más ONGs a la red, el fondo de gestión crece y el costo porcentual del servicio se reduce drásticamente.",
-        "title": "Proyección de Eficiencia de Costos:"
-      },
-      "phases": [
-        {
-          "description": "El 15% cubre la estructura técnica, legal y operativa inicial para validar el modelo.",
-          "nodes": ["5 ONGs", "$1.4 M + fondo", "15.4% fee", "pre-seed"],
-          "title": "Fase 1: Piloto"
-        },
-        {
-          "description": "Al duplicar la red, el costo del servicio baja casi a la mitad, transfiriendo ese ahorro directamente al presupuesto de impacto de los financiadores.",
-          "nodes": [
-            "12 ONGs",
-            "$3.4 M + fondo",
-            "~8.3% fee",
-            "expansión regional"
-          ],
-          "title": "Fase 2: Escala"
-        },
-        {
-          "description": "Con el ecosistema consolidado, la eficiencia operativa permite reducir el costo a menos del 5%, maximizando los recursos que llegan efectivamente a las comunidades.",
-          "nodes": ["25 ONGs", "$7 M + fondo", "<5% fee", "ecosistema maduro"],
-          "title": "Fase 3: Consolidación"
-        }
-      ],
-      "pilot": {
-        "description": "El 15% cubre la estructura técnica, legal y operativa inicial para validar el modelo.",
-        "nodes": {
-          "node1": "5 ONGs",
-          "node2": "$ 1.4 M + fondo",
-          "node3": "15.4% fee",
-          "node4": "pre-seed"
-        },
-        "title": "Fase 1: Piloto"
-      },
       "subtitle": "Un modelo financiero diseñado para maximizar el impacto: a mayor volumen de gestión, menor es el costo del servicio.",
       "title": "Gestión",
       "proyeccion": {
-        "title": "Tablero de Proyección KEY Protocol",
+        "title": "Tablero de Proyección",
         "subtitle": "Modelo de Financiamiento I+D+i (DAO) y Eficiencia de Escala.",
         "globalLabel": "% Global",
         "globalDescription": "Costo Total del Ecosistema (KEY + DAO) sobre Capital Gestionado.",
@@ -166,7 +130,24 @@
         "tableDaoDefinition": "Definición DAO",
         "tableGlobalPercent": "% GLOBAL (Total/Fondos)",
         "daoOnKey": "sobre KEY",
-        "ngosLabel": "ONGs"
+        "ngosLabel": "ONGs",
+        "phaseLabel": "Fase",
+        "phaseNames": {
+          "base": "Fase Inicial",
+          "scale": "Escalamiento",
+          "mature": "Madurez"
+        },
+        "phases": [
+          {
+            "description": "El 15% cubre la estructura técnica, legal y operativa inicial para validar el modelo."
+          },
+          {
+            "description": "Al duplicar la red, el costo del servicio baja casi a la mitad, transfiriendo ese ahorro directamente al presupuesto de impacto de los financiadores."
+          },
+          {
+            "description": "Con el ecosistema consolidado, la eficiencia operativa permite reducir el costo a menos del 5%, maximizando los recursos que llegan efectivamente a las comunidades."
+          }
+        ]
       }
     },
     "summary": {

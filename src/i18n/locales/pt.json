@@ -1,211 +1,362 @@
 {
-  "title": "Key Protocol",
-  "model_page": {
-    "title": "Modelo",
-    "summary": {
-      "title": "Resumo",
-      "subtitle": "Infraestrutura de confiança para transformar a atividade em território em ativos digitais verificáveis.",
-      "description": "Nosso protocolo opera através de um ciclo de validação de três etapas que garante a integridade dos dados desde sua captura em zonas desconectadas até sua certificação na blockchain.",
-      "cards": {
-        "step_a": {
-          "title": "A. Registro Offline-First",
-          "description": "O técnico utiliza o Field App em território para gerar provas de vida e ação:",
-          "list": [
-            "Identidade: Registro biométrico e documental para criar Identidades Digitais (DID).",
-            "Evidência: Captura de fotos geolocalizadas, impressões digitais e relatórios de áudio que são empacotados e criptografados localmente no dispositivo."
-          ]
-        },
-        "step_b": {
-          "title": "B. Sincronização Imutável",
-          "description": "Ao recuperar conectividade, a aplicação sincroniza os pacotes de dados:",
-          "list": [
-            "IPFS (Armazenamento): Os arquivos de evidência são distribuídos em uma rede descentralizada, tornando-os incensuráveis.",
-            "Polkadot (Consenso): O hash criptográfico da operação é registrado, criando uma marca de tempo inalterável."
-          ]
-        },
-        "step_c": {
-          "title": "C. Validação Privada",
-          "list": [
-            "Computação Confidencial (Phala Network): Processamos os dados sensíveis em um ambiente seguro (TEE) para validar a consistência entre a identidade e a evidência sem expor a privacidade do beneficiário.",
-            "Resultado: Emissão de um Certificado Digital que libera os fundos e atualiza o dashboard do financiador."
-          ]
-        }
-      }
-    },
-    "management": {
-      "title": "Gestão",
-      "subtitle": "Um modelo financeiro projetado para maximizar o impacto: quanto maior o volume de gestão, menor é o custo do serviço.",
-      "description": "Na fase atual (Pre-Seed), a estrutura de custos fixos do protocolo representa uma porcentagem maior devido ao desenvolvimento intensivo. No entanto, nosso modelo B2I (Business to Institutions) é deflacionário para o cliente: ao adicionar mais ONGs à rede, o fundo de gestão cresce e o custo percentual do serviço é drasticamente reduzido.",
-      "efficiency": {
-        "title": "Projeção de Eficiência de Custos:",
-        "description": "Na fase atual (Pre-Seed), a estrutura de custos fixos do protocolo representa uma porcentagem maior devido ao desenvolvimento intensivo. No entanto, nosso modelo B2I (Business to Institutions) é deflacionário para o cliente: ao adicionar mais ONGs à rede, o fundo de gestão cresce e o custo percentual do serviço é drasticamente reduzido."
-      },
-      "pilot": {
-        "title": "Fase 1: Piloto",
-        "description": "Os 15% cobrem a estrutura técnica, legal e operacional inicial para validar o modelo.",
-        "nodes": {
-          "node1": "5 ONGs",
-          "node2": "$ 1.4 M + fundo",
-          "node3": "15.4% taxa",
-          "node4": "pre-seed"
-        }
-      },
-      "phases": [
-        {
-          "title": "Fase 1: Piloto",
-          "description": "Os 15% cobrem a estrutura técnica, legal e operacional inicial para validar o modelo.",
-          "nodes": ["5 ONGs", "$1.4 M + fundo", "15.4% taxa", "pre-seed"]
-        },
-        {
-          "title": "Fase 2: Escala",
-          "description": "Ao duplicar a rede, o custo do serviço cai quase pela metade, transferindo essa economia diretamente para o orçamento de impacto dos financiadores.",
-          "nodes": [
-            "12 ONGs",
-            "$3.4 M + fundo",
-            "~8.3% taxa",
-            "expansão regional"
-          ]
-        },
-        {
-          "title": "Fase 3: Consolidação",
-          "description": "Com o ecossistema consolidado, a eficiência operacional permite reduzir o custo para menos de 5%, maximizando os recursos que chegam efetivamente às comunidades.",
-          "nodes": ["25 ONGs", "$7 M + fundo", "<5% taxa", "ecossistema maduro"]
-        }
-      ],
-      "chart": {
-        "fondos": "fundos",
-        "ongs": "ONGs",
-        "fee": "taxa"
-      },
-      "proyeccion": {
-        "title": "Painel de Projeção KEY Protocol",
-        "subtitle": "Modelo de Financiamento P&D+i (DAO) e Eficiência de Escala.",
-        "globalLabel": "% Global",
-        "globalDescription": "Custo Total do Ecossistema (KEY + DAO) sobre Capital Gerenciado.",
-        "fundsManaged": "Fundos Gerenciados",
-        "keyCost": "Custo KEY",
-        "base": "Base",
-        "dao": "DAO",
-        "rndFund": "fundo P&D+i",
-        "chartTitle": "Distribuição do Orçamento Operacional",
-        "chartSubtitle": "Comparativo de Fundos (AUM) vs. Custos (KEY + DAO).",
-        "legendAUM": "Capital Gerenciado (AUM)",
-        "legendKeyCost": "Custo Operacional KEY",
-        "legendDAO": "Fundo P&D+i (DAO)",
-        "tableYear": "Ano",
-        "tableFunds": "Fundos (AUM)",
-        "tableKeyCost": "Custo KEY",
-        "tableDaoFund": "Fundo DAO",
-        "tableDaoDefinition": "Definição DAO",
-        "tableGlobalPercent": "% GLOBAL (Total/Fundos)",
-        "daoOnKey": "sobre KEY",
-        "ngosLabel": "ONGs"
-      }
-    }
-  },
-  "nav": {
-    "home": "INÍCIO",
-    "about": "SOBRE",
-    "model": "MODELO",
-    "services": "SERVIÇOS"
-  },
   "about_page": {
-    "title": "Equipe",
     "description": "Combinamos experiência direta no setor social com engenharia de software especializada em Web3 para construir infraestrutura de impacto escalável.",
     "team": {
-      "martin": {
-        "role": "Founder & CEO",
-        "bio": "Responsável pela direção estratégica e desenvolvimento de negócios. Define a arquitetura do modelo B2B/B2I e gerencia alianças institucionais, fornecendo o know-how operacional necessário para implementação em territórios de baixa conectividade."
-      },
       "andres": {
-        "role": "Co-Founder &<br/>Blockchain Architect",
-        "bio": "Encarregado da infraestrutura descentralizada. Projeta e desenvolve contratos inteligentes (Smart Contracts) e protocolos de segurança, garantindo a integridade e imutabilidade dos registros de auditoria."
-      },
-      "mateo": {
-        "role": "Co-Founder & Lead<br/>Software Engineer",
-        "bio": "Lidera a engenharia de sistemas e o desenvolvimento backend. Especialista em lógica de sincronização offline-first, integração de identidade biométrica e armazenamento descentralizado (IPFS), garantindo a operacionalidade técnica da plataforma."
+        "bio": "Encarregado da infraestrutura descentralizada. Projeta e desenvolve contratos inteligentes (Smart Contracts) e protocolos de segurança, garantindo a integridade e imutabilidade dos registros de auditoria.",
+        "role": "Co-Founder &<br/>Blockchain Architect"
       },
       "kevin": {
-        "role": "Co-Founder &<br/>FullStack Engineer",
-        "bio": "Dirige o design e desenvolvimento frontend. Responsável pela interface do usuário (Web e Mobile) e experiência do cliente, traduzindo requisitos técnicos complexos em ferramentas de gestão intuitivas para operadores de campo e investidores."
+        "bio": "Dirige o design e desenvolvimento frontend. Responsável pela interface do usuário (Web e Mobile) e experiência do cliente, traduzindo requisitos técnicos complexos em ferramentas de gestão intuitivas para operadores de campo e investidores.",
+        "role": "Co-Founder &<br/>FullStack Engineer"
+      },
+      "martin": {
+        "bio": "Responsável pela direção estratégica e desenvolvimento de negócios. Define a arquitetura do modelo B2B/B2I e gerencia alianças institucionais, fornecendo o know-how operacional necessário para implementação em territórios de baixa conectividade.",
+        "role": "Founder & CEO"
+      },
+      "mateo": {
+        "bio": "Lidera a engenharia de sistemas e o desenvolvimento backend. Especialista em lógica de sincronização offline-first, integração de identidade biométrica e armazenamento descentralizado (IPFS), garantindo a operacionalidade técnica da plataforma.",
+        "role": "Co-Founder & Lead<br/>Software Engineer"
       }
-    }
-  },
-  "services_page": {
-    "hero": {
-      "title": "Serviços",
-      "description": "Nossa tecnologia é modular. Oferecemos soluções específicas para resolver problemas críticos de gestão, identidade e validação."
     },
-    "swipeHint": "← Deslize para ver mais serviços →",
-    "ariaGoToService": "Ir para o serviço",
-    "labels": {
-      "functionality": "Funcionalidade",
-      "advantage": "Vantagem",
-      "idealFor": "Ideal para"
-    },
-    "services": [
-      {
-        "id": "identity",
-        "title": "Identidade Digital Descentralizada (DID)",
-        "subtitle": "O passaporte digital para o desenvolvimento.",
-        "description": "Crie e gerencie identidades soberanas para beneficiários em áreas sem conectividade.",
-        "icon": "biometric.png",
-        "functionality": "Registro biométrico e documental offline que gera uma credencial verificável confidencial na blockchain.",
-        "advantage": "A possibilidade de vincular capacidades adquiridas às pessoas permite focalizar a implementação de projetos de impacto baseados em dados verificados e confidenciais.",
-        "idealFor": "ONGs, Governos, Programas de Inclusão Financeira."
-      },
-      {
-        "id": "documentation",
-        "title": "Validador de Evidências Criptografadas",
-        "subtitle": "Certificação de ações com privacidade garantida.",
-        "description": "Um motor de verificação que processa provas de campo sem expor dados sensíveis.",
-        "icon": "keyBox.png",
-        "functionality": "Análise automática de fotos, áudios e coordenadas mediante Inteligência Artificial em um ambiente seguro (TEE).",
-        "advantage": "Audita o cumprimento de tarefas (ex. assistência a um curso) protegendo a identidade dos participantes.",
-        "idealFor": "Auditoria de RSE, Bônus de Carbono, Certificação de Origem."
-      },
-      {
-        "id": "dashboard",
-        "title": "Monitor de Investimentos (Dashboard B2I)",
-        "subtitle": "Rastreabilidade financeira em tempo real.",
-        "description": "O painel de controle definitivo para visualizar o fluxo de fundos e seu impacto.",
-        "icon": "stats.png",
-        "functionality": "Visualização de métricas-chave, liberação de fundos por marcos cumpridos e relatórios de impacto certificados.",
-        "advantage": "Elimina a visibilidade diferida dos investimentos, oferecendo transparência total sobre onde e como se investe.",
-        "idealFor": "Bancos de Desenvolvimento, Fundos de Investimento de Impacto, Filantropia Corporativa."
-      },
-      {
-        "id": "automation",
-        "title": "Automação de Relatórios",
-        "subtitle": "Adeus à gestão manual.",
-        "description": "Transforma dados de campo desordenados em relatórios padronizados instantaneamente.",
-        "icon": "doc.png",
-        "functionality": "Agentes de IA que estruturam a informação coletada pelo Field App em formatos prontos para apresentar (PDF, Excel, API).",
-        "advantage": "Reduz em 90% o tempo administrativo das equipes técnicas, permitindo que se concentrem no trabalho social.",
-        "idealFor": "Coordenadores de Projeto, Equipes de Monitoramento e Avaliação."
-      }
-    ]
+    "title": "Equipe"
   },
   "allies_section": {
-    "title": "Aliados",
-    "description": "Impulsionado por líderes em tecnologia, educação e impacto social."
+    "description": "Impulsionado por líderes em tecnologia, educação e impacto social.",
+    "title": "Aliados"
   },
   "birthday_modal": {
-    "title": "Feliz Aniversário {name}!",
+    "cta": "Enviar felicitações",
     "message": "Hoje celebramos a vida de um dos nossos fundadores. Obrigado por sua visão e liderança!",
-    "cta": "Enviar felicitações"
+    "title": "Feliz Aniversário {name}!"
+  },
+  "contact": {
+    "contactInfo": {
+      "email": "info@keyprotocol.ar",
+      "location": "Argentina",
+      "title": "Informações de Contato"
+    },
+    "followUs": {
+      "title": "Siga-nos"
+    },
+    "form": {
+      "error": "Erro ao enviar mensagem. Por favor, tente novamente.",
+      "fields": {
+        "email": "Email",
+        "message": "Mensagem",
+        "name": "Nome",
+        "socialNetwork": "Assunto"
+      },
+      "send": "Enviar",
+      "sending": "Enviando...",
+      "success": "Mensagem enviada com sucesso!",
+      "title": "Envie-nos uma Mensagem"
+    },
+    "socialLinks": {
+      "linkedin": "https://www.linkedin.com/company/key-protocol-ar",
+      "twitter": "https://x.com/key_protocol",
+      "youtube": "https://youtube.com/@keyprotocol"
+    },
+    "title": "Contato"
+  },
+  "footer": {
+    "copyright": "© 2025 KEY Protocol Argentina. Todos os direitos reservados.",
+    "tagline": "Escrevendo código para regenerar o mundo"
   },
   "hero": {
-    "tag": "KEY PROTOCOL",
     "headline": {
       "line1": "Escrevendo",
       "line2": "código para",
       "line3": "regenerar o",
       "line4": "mundo"
-    }
+    },
+    "tag": "KEY PROTOCOL"
   },
+  "impacto": {
+    "metrics": {
+      "identities": {
+        "description": "As Identidades Digitais Descentralizadas (DIDs) capacitam os beneficiários com históricos imutáveis de suas capacitações, produções e conquistas. Isso lhes concede soberania sobre seus dados e facilita o acesso a microcréditos e novos mercados sem intermediários, transformando sua relação com o sistema financeiro e produtivo.",
+        "label": "Identidades Digitais (DIDs)",
+        "value": "2.500+"
+      },
+      "investment": {
+        "description": "Nosso sistema permite rastrear e certificar cada dólar investido em projetos de impacto social. Através da tecnologia blockchain e validação em território, garantimos transparência total no uso de recursos, permitindo que os investidores verifiquem em tempo real como seus fundos são utilizados e o impacto gerado.",
+        "label": "Volume de Investimento Rastreável",
+        "value": "1.4M+"
+      },
+      "organizations": {
+        "description": "Não construímos sozinhos. Nossa fase piloto é implantada junto com nossos parceiros locais e institucionais. Esta rede nos permite validar a tecnologia em diversos contextos culturais e geográficos, garantindo que o protocolo seja robusto, intuitivo e verdadeiramente útil para aqueles que trabalham diariamente no território.",
+        "label": "Organizações Aliadas",
+        "value": "5"
+      },
+      "savings": {
+        "description": "O custo invisível da ajuda humanitária é gerenciar os meios para verificar evidências. Ao digitalizar a validação na origem e encurtar os tempos de monitoramento, liberamos 30% do orçamento operacional. Isso significa ~$420.000 em despesas operacionais que podem ser redirecionadas diretamente para o impacto.",
+        "label": "Economia em Custos Operacionais",
+        "value": "30%"
+      }
+    },
+    "subtitle": "Métricas de rastreabilidade em tempo real e eficiência operacional dos recursos.",
+    "title": "Impacto"
+  },
+  "model_page": {
+    "management": {
+      "chart": {
+        "fee": "taxa",
+        "fondos": "fundos",
+        "ongs": "ONGs"
+      },
+      "description": "Na fase atual (Pre-Seed), a estrutura de custos fixos do protocolo representa uma porcentagem maior devido ao desenvolvimento intensivo. No entanto, nosso modelo B2I (Business to Institutions) é deflacionário para o cliente: ao adicionar mais ONGs à rede, o fundo de gestão cresce e o custo percentual do serviço é drasticamente reduzido.",
+      "proyeccion": {
+        "base": "Base",
+        "chartSubtitle": "Comparativo de Fundos (AUM) vs. Custos (KEY + DAO).",
+        "chartTitle": "Distribuição do Orçamento Operacional",
+        "dao": "DAO",
+        "daoOnKey": "sobre KEY",
+        "fundsManaged": "Fundos Gerenciados",
+        "globalDescription": "Custo Total do Ecossistema (KEY + DAO) sobre Capital Gerenciado.",
+        "globalLabel": "% Global",
+        "keyCost": "Custo KEY",
+        "legendAUM": "Capital Gerenciado (AUM)",
+        "legendDAO": "Fundo P&D+i (DAO)",
+        "legendKeyCost": "Custo Operacional KEY",
+        "ngosLabel": "ONGs",
+        "rndFund": "fundo P&D+i",
+        "subtitle": "Modelo de Financiamento P&D+i (DAO) e Eficiência de Escala.",
+        "tableDaoDefinition": "Definição DAO",
+        "tableDaoFund": "Fundo DAO",
+        "tableFunds": "Fundos (AUM)",
+        "tableGlobalPercent": "% GLOBAL (Total/Fundos)",
+        "tableKeyCost": "Custo KEY",
+        "tableYear": "Ano",
+        "title": "Painel de Projeção KEY Protocol",
+        "phaseLabel": "Fase",
+        "phaseNames": {
+          "base": "Fase Inicial",
+          "scale": "Escalamento",
+          "mature": "Maturidade"
+        },
+        "phases": [
+          {
+            "description": "Os 15% cobrem a estrutura técnica, legal e operacional inicial para validar o modelo."
+          },
+          {
+            "description": "Ao duplicar a rede, o custo do serviço cai quase pela metade, transferindo essa economia diretamente para o orçamento de impacto dos financiadores."
+          },
+          {
+            "description": "Com o ecossistema consolidado, a eficiência operacional permite reduzir o custo para menos de 5%, maximizando os recursos que chegam efetivamente às comunidades."
+          }
+        ]
+      },
+      "subtitle": "Um modelo financeiro projetado para maximizar o impacto: quanto maior o volume de gestão, menor é o custo do serviço.",
+      "title": "Gestão"
+    },
+    "summary": {
+      "cards": {
+        "step_a": {
+          "description": "O técnico utiliza o Field App em território para gerar provas de vida e ação:",
+          "list": [
+            "Identidade: Registro biométrico e documental para criar Identidades Digitais (DID).",
+            "Evidência: Captura de fotos geolocalizadas, impressões digitais e relatórios de áudio que são empacotados e criptografados localmente no dispositivo."
+          ],
+          "title": "A. Registro Offline-First"
+        },
+        "step_b": {
+          "description": "Ao recuperar conectividade, a aplicação sincroniza os pacotes de dados:",
+          "list": [
+            "IPFS (Armazenamento): Os arquivos de evidência são distribuídos em uma rede descentralizada, tornando-os incensuráveis.",
+            "Polkadot (Consenso): O hash criptográfico da operação é registrado, criando uma marca de tempo inalterável."
+          ],
+          "title": "B. Sincronização Imutável"
+        },
+        "step_c": {
+          "list": [
+            "Computação Confidencial (Phala Network): Processamos os dados sensíveis em um ambiente seguro (TEE) para validar a consistência entre a identidade e a evidência sem expor a privacidade do beneficiário.",
+            "Resultado: Emissão de um Certificado Digital que libera os fundos e atualiza o dashboard do financiador."
+          ],
+          "title": "C. Validação Privada"
+        }
+      },
+      "description": "Nosso protocolo opera através de um ciclo de validação de três etapas que garante a integridade dos dados desde sua captura em zonas desconectadas até sua certificação na blockchain.",
+      "subtitle": "Infraestrutura de confiança para transformar a atividade em território em ativos digitais verificáveis.",
+      "title": "Resumo"
+    },
+    "title": "Modelo"
+  },
+  "nav": {
+    "about": "SOBRE",
+    "home": "INÍCIO",
+    "model": "MODELO",
+    "services": "SERVIÇOS"
+  },
+  "roadmap": {
+    "keyFeaturesLabel": "Características principais:",
+    "phases": [
+      {
+        "description": "Implementação do protocolo base e sistema de validação offline",
+        "milestones": [
+          {
+            "completed": false,
+            "text": "Protocolo de validação implementado"
+          },
+          {
+            "completed": false,
+            "text": "Sistema offline-first operacional"
+          },
+          {
+            "completed": false,
+            "text": "Testes piloto bem-sucedidos"
+          }
+        ],
+        "title": "Desenvolvimento do Protocolo"
+      },
+      {
+        "description": "Implementação do protocolo base e sistema de validação offline",
+        "milestones": [
+          {
+            "completed": false,
+            "text": "Incorporação de 7 novas organizações"
+          },
+          {
+            "completed": false,
+            "text": "Beta funcionalidade de liberação automática de fundos (Smart Contracts)"
+          },
+          {
+            "completed": false,
+            "text": "Compatibilidade relatório padrão sobre os Objetivos de Desenvolvimento Sustentável"
+          }
+        ],
+        "title": "Consolidar o Protocolo"
+      },
+      {
+        "description": "Validação operativa no Gran Chaco e UX",
+        "milestones": [
+          {
+            "completed": false,
+            "text": "Implementação ativa nas 5 ONGs aliadas"
+          },
+          {
+            "completed": false,
+            "text": "Geração automática de relatórios certificados em blockchain"
+          },
+          {
+            "completed": false,
+            "text": "Otimização UX \"Gasless\" lançamento da versão v2.0"
+          }
+        ],
+        "title": "Consolidação do Piloto"
+      },
+      {
+        "description": "Transição de projeto para empresa e primeiras vendas",
+        "milestones": [
+          {
+            "completed": false,
+            "text": "Formalização para faturar licenças SaaS"
+          },
+          {
+            "completed": false,
+            "text": "Validação dos Smart Contracts com altos padrões de segurança"
+          },
+          {
+            "completed": false,
+            "text": "Validação do \"Business Case\" resultados financeiros certificados"
+          }
+        ],
+        "title": "Estruturação e Negócio (B2I)"
+      }
+    ],
+    "timeline": {
+      "quarters": [
+        {
+          "completed": false,
+          "label": "Q4 2025"
+        },
+        {
+          "completed": false,
+          "label": "Q1 2026"
+        },
+        {
+          "completed": false,
+          "label": "Q2 2026"
+        },
+        {
+          "completed": false,
+          "label": "Q3 2026"
+        }
+      ]
+    },
+    "title": "Roadmap"
+  },
+  "services_page": {
+    "ariaGoToService": "Ir para o serviço",
+    "hero": {
+      "description": "Nossa tecnologia é modular. Oferecemos soluções específicas para resolver problemas críticos de gestão, identidade e validação.",
+      "title": "Serviços"
+    },
+    "labels": {
+      "advantage": "Vantagem",
+      "functionality": "Funcionalidade",
+      "idealFor": "Ideal para"
+    },
+    "services": [
+      {
+        "advantage": "A possibilidade de vincular capacidades adquiridas às pessoas permite focalizar a implementação de projetos de impacto baseados em dados verificados e confidenciais.",
+        "description": "Crie e gerencie identidades soberanas para beneficiários em áreas sem conectividade.",
+        "functionality": "Registro biométrico e documental offline que gera uma credencial verificável confidencial na blockchain.",
+        "icon": "biometric.png",
+        "id": "identity",
+        "idealFor": "ONGs, Governos, Programas de Inclusão Financeira.",
+        "subtitle": "O passaporte digital para o desenvolvimento.",
+        "title": "Identidade Digital Descentralizada (DID)"
+      },
+      {
+        "advantage": "Audita o cumprimento de tarefas (ex. assistência a um curso) protegendo a identidade dos participantes.",
+        "description": "Um motor de verificação que processa provas de campo sem expor dados sensíveis.",
+        "functionality": "Análise automática de fotos, áudios e coordenadas mediante Inteligência Artificial em um ambiente seguro (TEE).",
+        "icon": "keyBox.png",
+        "id": "documentation",
+        "idealFor": "Auditoria de RSE, Bônus de Carbono, Certificação de Origem.",
+        "subtitle": "Certificação de ações com privacidade garantida.",
+        "title": "Validador de Evidências Criptografadas"
+      },
+      {
+        "advantage": "Elimina a visibilidade diferida dos investimentos, oferecendo transparência total sobre onde e como se investe.",
+        "description": "O painel de controle definitivo para visualizar o fluxo de fundos e seu impacto.",
+        "functionality": "Visualização de métricas-chave, liberação de fundos por marcos cumpridos e relatórios de impacto certificados.",
+        "icon": "stats.png",
+        "id": "dashboard",
+        "idealFor": "Bancos de Desenvolvimento, Fundos de Investimento de Impacto, Filantropia Corporativa.",
+        "subtitle": "Rastreabilidade financeira em tempo real.",
+        "title": "Monitor de Investimentos (Dashboard B2I)"
+      },
+      {
+        "advantage": "Reduz em 90% o tempo administrativo das equipes técnicas, permitindo que se concentrem no trabalho social.",
+        "description": "Transforma dados de campo desordenados em relatórios padronizados instantaneamente.",
+        "functionality": "Agentes de IA que estruturam a informação coletada pelo Field App em formatos prontos para apresentar (PDF, Excel, API).",
+        "icon": "doc.png",
+        "id": "automation",
+        "idealFor": "Coordenadores de Projeto, Equipes de Monitoramento e Avaliação.",
+        "subtitle": "Adeus à gestão manual.",
+        "title": "Automação de Relatórios"
+      }
+    ],
+    "swipeHint": "← Deslize para ver mais serviços →"
+  },
+  "title": "Key Protocol",
   "vision": {
-    "title": "Visão",
+    "cards": {
+      "impact": {
+        "description": "Transparência total para investidores e organizações sobre o uso de recursos",
+        "title": "Impacto Certificado"
+      },
+      "offline": {
+        "description": "Tecnologia que funciona sem conectividade, projetada para as comunidades mais remotas",
+        "title": "Offline first"
+      },
+      "validation": {
+        "description": "Ferramentas simples para documentar e validar o impacto de treinamentos em tempo real",
+        "title": "Validação em Território"
+      }
+    },
     "description": {
       "part1": "KEY protocol",
       "part2": "fornece a infraestrutura digital para certificar ações em ambientes sem conectividade, transformando o gerenciamento de campo em evidência imutável. Permitimos que as organizações validem seu trabalho com tecnologia",
@@ -214,176 +365,6 @@
       "part5": "rastreabilidade e monitoramento",
       "part6": "de seus recursos."
     },
-    "cards": {
-      "validation": {
-        "title": "Validação em Território",
-        "description": "Ferramentas simples para documentar e validar o impacto de treinamentos em tempo real"
-      },
-      "impact": {
-        "title": "Impacto Certificado",
-        "description": "Transparência total para investidores e organizações sobre o uso de recursos"
-      },
-      "offline": {
-        "title": "Offline first",
-        "description": "Tecnologia que funciona sem conectividade, projetada para as comunidades mais remotas"
-      }
-    }
-  },
-  "impacto": {
-    "title": "Impacto",
-    "subtitle": "Métricas de rastreabilidade em tempo real e eficiência operacional dos recursos.",
-    "metrics": {
-      "investment": {
-        "value": "1.4M+",
-        "label": "Volume de Investimento Rastreável",
-        "description": "Nosso sistema permite rastrear e certificar cada dólar investido em projetos de impacto social. Através da tecnologia blockchain e validação em território, garantimos transparência total no uso de recursos, permitindo que os investidores verifiquem em tempo real como seus fundos são utilizados e o impacto gerado."
-      },
-      "savings": {
-        "value": "30%",
-        "label": "Economia em Custos Operacionais",
-        "description": "O custo invisível da ajuda humanitária é gerenciar os meios para verificar evidências. Ao digitalizar a validação na origem e encurtar os tempos de monitoramento, liberamos 30% do orçamento operacional. Isso significa ~$420.000 em despesas operacionais que podem ser redirecionadas diretamente para o impacto."
-      },
-      "organizations": {
-        "value": "5",
-        "label": "Organizações Aliadas",
-        "description": "Não construímos sozinhos. Nossa fase piloto é implantada junto com nossos parceiros locais e institucionais. Esta rede nos permite validar a tecnologia em diversos contextos culturais e geográficos, garantindo que o protocolo seja robusto, intuitivo e verdadeiramente útil para aqueles que trabalham diariamente no território."
-      },
-      "identities": {
-        "value": "2.500+",
-        "label": "Identidades Digitais (DIDs)",
-        "description": "As Identidades Digitais Descentralizadas (DIDs) capacitam os beneficiários com históricos imutáveis de suas capacitações, produções e conquistas. Isso lhes concede soberania sobre seus dados e facilita o acesso a microcréditos e novos mercados sem intermediários, transformando sua relação com o sistema financeiro e produtivo."
-      }
-    }
-  },
-  "roadmap": {
-    "title": "Roadmap",
-    "keyFeaturesLabel": "Características principais:",
-    "timeline": {
-      "quarters": [
-        {
-          "label": "Q4 2025",
-          "completed": false
-        },
-        {
-          "label": "Q1 2026",
-          "completed": false
-        },
-        {
-          "label": "Q2 2026",
-          "completed": false
-        },
-        {
-          "label": "Q3 2026",
-          "completed": false
-        }
-      ]
-    },
-    "phases": [
-      {
-        "title": "Desenvolvimento do Protocolo",
-        "description": "Implementação do protocolo base e sistema de validação offline",
-        "milestones": [
-          {
-            "text": "Protocolo de validação implementado",
-            "completed": false
-          },
-          {
-            "text": "Sistema offline-first operacional",
-            "completed": false
-          },
-          {
-            "text": "Testes piloto bem-sucedidos",
-            "completed": false
-          }
-        ]
-      },
-      {
-        "title": "Consolidar o Protocolo",
-        "description": "Implementação do protocolo base e sistema de validação offline",
-        "milestones": [
-          {
-            "text": "Incorporação de 7 novas organizações",
-            "completed": false
-          },
-          {
-            "text": "Beta funcionalidade de liberação automática de fundos (Smart Contracts)",
-            "completed": false
-          },
-          {
-            "text": "Compatibilidade relatório padrão sobre os Objetivos de Desenvolvimento Sustentável",
-            "completed": false
-          }
-        ]
-      },
-      {
-        "title": "Consolidação do Piloto",
-        "description": "Validação operativa no Gran Chaco e UX",
-        "milestones": [
-          {
-            "text": "Implementação ativa nas 5 ONGs aliadas",
-            "completed": false
-          },
-          {
-            "text": "Geração automática de relatórios certificados em blockchain",
-            "completed": false
-          },
-          {
-            "text": "Otimização UX \"Gasless\" lançamento da versão v2.0",
-            "completed": false
-          }
-        ]
-      },
-      {
-        "title": "Estruturação e Negócio (B2I)",
-        "description": "Transição de projeto para empresa e primeiras vendas",
-        "milestones": [
-          {
-            "text": "Formalização para faturar licenças SaaS",
-            "completed": false
-          },
-          {
-            "text": "Validação dos Smart Contracts com altos padrões de segurança",
-            "completed": false
-          },
-          {
-            "text": "Validação do \"Business Case\" resultados financeiros certificados",
-            "completed": false
-          }
-        ]
-      }
-    ]
-  },
-  "contact": {
-    "title": "Contato",
-    "contactInfo": {
-      "title": "Informações de Contato",
-      "email": "info@keyprotocol.ar",
-      "location": "Argentina"
-    },
-    "followUs": {
-      "title": "Siga-nos"
-    },
-    "form": {
-      "title": "Envie-nos uma Mensagem",
-      "fields": {
-        "name": "Nome",
-        "email": "Email",
-        "socialNetwork": "Assunto",
-        "message": "Mensagem"
-      },
-      "send": "Enviar",
-      "sending": "Enviando...",
-      "success": "Mensagem enviada com sucesso!",
-      "error": "Erro ao enviar mensagem. Por favor, tente novamente."
-    },
-    "socialLinks": {
-      "twitter": "https://x.com/key_protocol",
-      "linkedin": "https://www.linkedin.com/company/key-protocol-ar",
-      "youtube": "https://youtube.com/@keyprotocol"
-    }
-  },
-  "footer": {
-    "copyright": "© 2025 KEY Protocol Argentina. Todos os direitos reservados.",
-    "tagline": "Escrevendo código para regenerar o mundo"
+    "title": "Visão"
   }
 }

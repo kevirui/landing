@@ -36,49 +36,13 @@
       "title": "Management",
       "subtitle": "A financial model designed to maximize impact: the greater the management volume, the lower the service cost.",
       "description": "In the current phase (Pre-Seed), the protocol's fixed cost structure represents a higher percentage due to intensive development. However, our B2I (Business to Institutions) model is deflationary for the client: by adding more NGOs to the network, the management fund grows and the percentage cost of the service is drastically reduced.",
-      "efficiency": {
-        "title": "Cost Efficiency Projection:",
-        "description": "In the current phase (Pre-Seed), the protocol's fixed cost structure represents a higher percentage due to intensive development. However, our B2I (Business to Institutions) model is deflationary for the client: by adding more NGOs to the network, the management fund grows and the percentage cost of the service is drastically reduced."
-      },
-      "pilot": {
-        "title": "Phase 1: Pilot",
-        "description": "The 15% covers the initial technical, legal, and operational structure to validate the model.",
-        "nodes": {
-          "node1": "5 NGOs",
-          "node2": "$ 1.4 M + fund",
-          "node3": "15.4% fee",
-          "node4": "pre-seed"
-        }
-      },
-      "phases": [
-        {
-          "title": "Phase 1: Pilot",
-          "description": "The 15% covers the initial technical, legal, and operational structure to validate the model.",
-          "nodes": ["5 NGOs", "$1.4 M + fund", "15.4% fee", "pre-seed"]
-        },
-        {
-          "title": "Phase 2: Scale",
-          "description": "By doubling the network, the service cost drops almost in half, transferring that savings directly to the funders' impact budget.",
-          "nodes": [
-            "12 NGOs",
-            "$3.4 M + fund",
-            "~8.3% fee",
-            "regional expansion"
-          ]
-        },
-        {
-          "title": "Phase 3: Consolidation",
-          "description": "With the ecosystem consolidated, operational efficiency allows reducing the cost to less than 5%, maximizing the resources that effectively reach the communities.",
-          "nodes": ["25 NGOs", "$7 M + fund", "<5% fee", "mature ecosystem"]
-        }
-      ],
       "chart": {
         "fondos": "funds",
         "ongs": "NGOs",
         "fee": "fee"
       },
       "proyeccion": {
-        "title": "KEY Protocol Projection Dashboard",
+        "title": "Projection Dashboard",
         "subtitle": "R&D+i (DAO) Financing Model and Scale Efficiency.",
         "globalLabel": "% Global",
         "globalDescription": "Total Ecosystem Cost (KEY + DAO) over Managed Capital.",
@@ -99,7 +63,24 @@
         "tableDaoDefinition": "DAO Definition",
         "tableGlobalPercent": "% GLOBAL (Total/Funds)",
         "daoOnKey": "on KEY",
-        "ngosLabel": "NGOs"
+        "ngosLabel": "NGOs",
+        "phaseLabel": "Phase",
+        "phaseNames": {
+          "base": "Initial Phase",
+          "scale": "Scaling",
+          "mature": "Maturity"
+        },
+        "phases": [
+          {
+            "description": "The 15% covers the initial technical, legal, and operational structure to validate the model."
+          },
+          {
+            "description": "By doubling the network, the service cost drops almost in half, transferring that savings directly to the funders' impact budget."
+          },
+          {
+            "description": "With the ecosystem consolidated, operational efficiency allows reducing the cost to less than 5%, maximizing the resources that effectively reach the communities."
+          }
+        ]
       }
     }
   },
