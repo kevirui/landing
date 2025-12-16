@@ -1,0 +1,47 @@
+
+> key-protocol-landing@1.0.0 test E:\Apps\Key Protocol\Landing
+> vitest "src/components/ui/Ripple.test.tsx" "--run" "--reporter=verbose"
+
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mE:/Apps/Key Protocol/Landing[39m
+
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22museRipple hook[2m > [22mshould initialize with empty ripples array[32m 16[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22museRipple hook[2m > [22mshould create ripple on mouse event[32m 6[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22museRipple hook[2m > [22mshould calculate ripple size based on element dimensions[32m 2[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22museRipple hook[2m > [22mshould remove ripple after 600ms timeout[32m 3[2mms[22m[39m
+ [31m├ù[39m src/components/ui/Ripple.test.tsx[2m > [22museRipple hook[2m > [22mshould handle multiple ripples[32m 11[2mms[22m[39m
+[31m   ÔåÆ expected [] to have a length of 1 but got +0[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22mRippleContainer component[2m > [22mshould render without ripples[32m 13[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22mRippleContainer component[2m > [22mshould render single ripple[32m 18[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22mRippleContainer component[2m > [22mshould render multiple ripples[32m 5[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22mRippleContainer component[2m > [22mshould apply correct inline styles to ripples[32m 4[2mms[22m[39m
+ [32mÔ£ô[39m src/components/ui/Ripple.test.tsx[2m > [22mRippleContainer component[2m > [22mshould have proper CSS classes[32m 3[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 1 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  src/components/ui/Ripple.test.tsx > useRipple hook > should handle multiple ripples
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ÔØ» src/components/ui/Ripple.test.tsx:137:36
+    135|     });
+    136| 
+    137|     expect(result.current.ripples).toHaveLength(1);
+       |                                    ^
+    138| 
+    139|     // Advance time to remove second ripple
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/1]ÔÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m9 passed[39m[22m[90m (10)[39m
+[2m   Start at [22m 12:32:35
+[2m   Duration [22m 2.32s[2m (transform 91ms, setup 244ms, import 452ms, tests 84ms, environment 1.20s)[22m
+
+ÔÇëELIFECYCLEÔÇë Test failed. See above for more details.

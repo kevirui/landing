@@ -1,13 +1,23 @@
 import type { APIRoute } from 'astro';
 import sgMail from '@sendgrid/mail';
+import {
+  generateEmailHTML,
+  generateConfirmationEmailHTML,
+} from '@/utils/emailTemplate';
 
 /**
  * API endpoint para manejar el envío de formularios de contacto
+ *
+ * Funcionalidad:
+ * - Recibe los datos del formulario de contacto
+ * - Envía un email al equipo de Key Protocol con los detalles del mensaje
+ * - Envía un email de confirmación automática al usuario que llenó el formulario
  *
  * Configuración requerida (variables de entorno):
  * - SENDGRID_API_KEY: API key de SendGrid (requerido para producción)
  * - SENDGRID_FROM_EMAIL: Email desde el cual se enviará (requerido en producción)
  * - SENDGRID_TO_EMAIL: Email destinatario (a dónde llegarán los mensajes)
+ * - SENDGRID_BCC_EMAIL: Email de Blind Carbon Copy (opcional)
  * - EMAIL_WEBHOOK_URL: URL de webhook alternativa (opcional, como fallback)
  *
  * En modo desarrollo, los emails se registrarán en la consola si no hay API key configurada.
@@ -15,157 +25,6 @@ import sgMail from '@sendgrid/mail';
 
 // Mark this endpoint as server-rendered (not static)
 export const prerender = false;
-
-/**
- * Genera el contenido HTML estilizado para el email
- */
-function generateEmailHTML(
-  name: string,
-  email: string,
-  socialNetwork: string | null,
-  message: string
-): string {
-  const escapedName = name
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  const escapedEmail = email
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  const escapedSocialNetwork = (socialNetwork || 'No especificada')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  const escapedMessage = message
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br>');
-
-  return `
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nuevo mensaje de contacto - Key Protocol</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
-  <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f5f5f5; padding: 20px;">
-    <tr>
-      <td align="center">
-        <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, hsl(164, 80%, 20%) 0%, hsl(164, 80%, 35%) 100%); padding: 30px 20px; text-align: center;">
-              <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600;">
-                Nuevo Mensaje de Contacto
-              </h1>
-              <p style="margin: 10px 0 0 0; color: #e0e0e0; font-size: 14px;">
-                Key Protocol - Formulario de Contacto
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Content -->
-          <tr>
-            <td style="padding: 30px 20px;">
-              <p style="margin: 0 0 20px 0; color: #333333; font-size: 16px; line-height: 1.6;">
-                Has recibido un nuevo mensaje desde el formulario de contacto de Key Protocol:
-              </p>
-              
-              <!-- Info Card -->
-              <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8f9fa; border-radius: 6px; margin-bottom: 20px; overflow: hidden;">
-                <tr>
-                  <td style="padding: 20px;">
-                    <!-- Name -->
-                    <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-                      <tr>
-                        <td style="padding: 0; width: 120px; color: #666666; font-size: 14px; font-weight: 600; vertical-align: top;">
-                          Nombre:
-                        </td>
-                        <td style="padding: 0; color: #333333; font-size: 14px;">
-                          ${escapedName}
-                        </td>
-                      </tr>
-                    </table>
-                    
-                    <!-- Email -->
-                    <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-                      <tr>
-                        <td style="padding: 0; width: 120px; color: #666666; font-size: 14px; font-weight: 600; vertical-align: top;">
-                          Email:
-                        </td>
-                        <td style="padding: 0; color: #333333; font-size: 14px;">
-                          <a href="mailto:${escapedEmail}" style="color: hsl(164, 80%, 40%); text-decoration: none;">${escapedEmail}</a>
-                        </td>
-                      </tr>
-                    </table>
-                    
-                    <!-- Social Network -->
-                    <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-                      <tr>
-                        <td style="padding: 0; width: 120px; color: #666666; font-size: 14px; font-weight: 600; vertical-align: top;">
-                          Asunto:
-                        </td>
-                        <td style="padding: 0; color: #333333; font-size: 14px;">
-                          ${escapedSocialNetwork}
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-              
-              <!-- Message -->
-              <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                <tr>
-                  <td style="padding: 0; color: #666666; font-size: 14px; font-weight: 600; margin-bottom: 10px; display: block;">
-                    Mensaje:
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 15px; background-color: #f8f9fa; border-left: 4px solid hsl(164, 80%, 40%); border-radius: 4px; color: #333333; font-size: 14px; line-height: 1.6;">
-                    ${escapedMessage}
-                  </td>
-                </tr>
-              </table>
-              
-              <!-- Action Button -->
-              <table role="presentation" style="width: 100%; border-collapse: collapse; margin-top: 30px;">
-                <tr>
-                  <td align="center">
-                    <a href="mailto:${escapedEmail}?subject=Re: Nuevo mensaje de contacto de ${escapedName}" 
-                       style="display: inline-block; padding: 12px 30px; background-color: hsl(164, 80%, 40%); color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 600; transition: background-color 0.3s;">
-                      Responder por Email
-                    </a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 20px; background-color: #f8f9fa; text-align: center; border-top: 1px solid #e0e0e0;">
-              <p style="margin: 0; color: #666666; font-size: 12px; line-height: 1.5;">
-                Este mensaje fue enviado automáticamente desde el formulario de contacto de<br>
-                <strong style="color: hsl(164, 80%, 40%);">Key Protocol</strong>
-              </p>
-              <p style="margin: 10px 0 0 0; color: #999999; font-size: 11px;">
-                No respondas directamente a este correo. Utiliza el botón "Responder por Email" arriba.
-              </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `.trim();
-}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -224,7 +83,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Prepare email content
     const emailSubject = `Nuevo mensaje de contacto de ${name}`;
     const emailBody = `
-Nuevo mensaje de contacto desde el sitio web de Key Protocol:
+Nuevo mensaje de contacto desde la landing page de Key Protocol:
 
 Nombre: ${name}
 Email: ${email}
@@ -233,23 +92,36 @@ Mensaje:
 ${message}
 
 ---
-Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
+Este mensaje fue enviado desde el formulario de contacto de la Landing Page de Key Protocol.
     `.trim();
 
     // Send email using a service
     // Use environment variable for recipient email, fallback to default
     const recipientEmail =
-      import.meta.env.SENDGRID_TO_EMAIL || 'martinlago84@gmail.com';
+      import.meta.env.SENDGRID_TO_EMAIL || 'general@keyprotocol.ar';
 
     // From email - debe ser un email verificado en SendGrid o del dominio verificado
     const fromEmail =
-      import.meta.env.SENDGRID_FROM_EMAIL || 'noreply@keyprotocol.com';
+      import.meta.env.SENDGRID_FROM_EMAIL || 'landing@keyprotocol.com';
+
+    const bccEmail =
+      import.meta.env.SENDGRID_BCC_EMAIL || 'wichidelmonte@gmail.com';
 
     // Validate email format (reuse the same regex)
     if (!emailRegex.test(recipientEmail)) {
       return new Response(
         JSON.stringify({
           error: `Formato de email destinatario inválido: ${recipientEmail}`,
+        }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Validate BCC email format if provided
+    if (bccEmail && !emailRegex.test(bccEmail)) {
+      return new Response(
+        JSON.stringify({
+          error: `Formato de email BCC inválido: ${bccEmail}`,
         }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
@@ -289,6 +161,7 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
         await sgMail.send({
           from: fromEmail,
           to: recipientEmail,
+          bcc: bccEmail,
           subject: emailSubject,
           text: emailBody,
           html: htmlContent,
@@ -297,6 +170,29 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
 
         console.log('Email sent successfully via SendGrid');
         emailSent = true;
+
+        // Send confirmation email to user
+        try {
+          const confirmationHtmlContent = generateConfirmationEmailHTML(name);
+
+          await sgMail.send({
+            from: fromEmail,
+            to: email, // Send to the user's email
+            subject: '¡Gracias por contactarnos! - Key Protocol',
+            text: `Hola ${name},\n\nHemos recibido tu mensaje correctamente y queremos agradecerte por ponerte en contacto con nosotros.\n\nNuestro equipo revisará tu consulta y te responderemos a la brevedad. Generalmente respondemos en un plazo de 24 a 48 horas hábiles.\n\nSaludos cordiales,\nEl equipo de Key Protocol`,
+            html: confirmationHtmlContent,
+            replyTo: fromEmail,
+          });
+
+          console.log('Confirmation email sent successfully to user');
+        } catch (confirmError: any) {
+          // Log the error but don't fail the entire request
+          console.error(
+            'Error sending confirmation email to user:',
+            confirmError
+          );
+          // Don't throw - the main email was sent successfully
+        }
       } catch (error: any) {
         console.error('Error sending email via SendGrid:', error);
 
@@ -346,6 +242,7 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
             errors: errorDetails,
             fromEmail: fromEmail,
             toEmail: recipientEmail,
+            bccEmail: bccEmail,
             hasApiKey: !!SENDGRID_API_KEY,
           });
         }
@@ -365,6 +262,7 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
             },
             body: JSON.stringify({
               to: recipientEmail,
+              bcc: bccEmail,
               subject: emailSubject,
               text: emailBody,
               from: email,
@@ -398,10 +296,24 @@ Este mensaje fue enviado desde el formulario de contacto de Key Protocol.
       console.log('=== EMAIL CONTENT (Development Mode) ===');
       console.log('To:', recipientEmail);
       console.log('From:', fromEmail);
+      console.log('BCC:', bccEmail);
       console.log('Subject:', emailSubject);
       console.log('Text Body:', emailBody);
       console.log('HTML Body:', htmlContent);
       console.log('=====================================');
+
+      // Also log confirmation email in development
+      const confirmationHtmlContent = generateConfirmationEmailHTML(name);
+      console.log('\n=== CONFIRMATION EMAIL (Development Mode) ===');
+      console.log('To:', email);
+      console.log('From:', fromEmail);
+      console.log('Subject:', '¡Gracias por contactarnos! - Key Protocol');
+      console.log(
+        'Text Body:',
+        `Hola ${name},\n\nHemos recibido tu mensaje correctamente y queremos agradecerte por ponerte en contacto con nosotros.\n\nNuestro equipo revisará tu consulta y te responderemos a la brevedad. Generalmente respondemos en un plazo de 24 a 48 horas hábiles.\n\nSaludos cordiales,\nEl equipo de Key Protocol`
+      );
+      console.log('HTML Body:', confirmationHtmlContent);
+      console.log('=====================================\n');
 
       // In production, return an error if email wasn't sent
       if (import.meta.env.PROD) {
