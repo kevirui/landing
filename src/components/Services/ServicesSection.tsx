@@ -1,5 +1,7 @@
 import React from 'react';
 import { ServiceCard } from './ServiceCard';
+import { CarouselDots } from './CarouselDots';
+import { CarouselNavigationButtons } from './CarouselNavigationButtons';
 import { useCarousel } from './useCarousel';
 
 interface Service {
@@ -41,6 +43,9 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
     handleMouseDown,
     pauseAutoAdvance,
     resumeAutoAdvance,
+    nextSlide,
+    prevSlide,
+    goToSlide,
   } = useCarousel({
     totalSlides: services.length,
   });
@@ -68,11 +73,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
           >
             <div
               ref={trackRef}
-              className="carousel-track flex"
+              className="carousel-track flex select-none cursor-grab"
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
               onMouseDown={handleMouseDown}
-              style={{ cursor: 'grab', userSelect: 'none' }}
             >
               {services.map((service, index) => (
                 <div
@@ -94,21 +98,38 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Navigation Controls */}
+          {services.length > 1 && (
+            <>
+              <CarouselNavigationButtons
+                onPrevious={() => {
+                  prevSlide();
+                  pauseAutoAdvance();
+                  setTimeout(resumeAutoAdvance, 3000);
+                }}
+                onNext={() => {
+                  nextSlide();
+                  pauseAutoAdvance();
+                  setTimeout(resumeAutoAdvance, 3000);
+                }}
+              />
+
+              <CarouselDots
+                totalDots={services.length}
+                currentIndex={currentIndex}
+                onDotClick={index => {
+                  goToSlide(index);
+                  pauseAutoAdvance();
+                  setTimeout(resumeAutoAdvance, 3000);
+                }}
+              />
+            </>
+          )}
         </div>
       </div>
 
       <style>{`
-        .carousel-track {
-          user-select: none;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-        }
-
-        .carousel-slide {
-          flex-shrink: 0;
-        }
-
         .carousel-container {
           scrollbar-width: none;
           -ms-overflow-style: none;

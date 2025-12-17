@@ -20,6 +20,11 @@ html {
     color 0.3s ease;
 }
 
+/* Global text color - white by default */
+body {
+  color: white;
+}
+
 /* Color transitions - using :where() for lower specificity */
 :where(*):not(.roadmap-carousel-slide) {
   transition-property: background-color, border-color, color, fill, stroke;

@@ -2,20 +2,12 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
-import node from '@astrojs/node';
 import { fileURLToPath } from 'url';
 import { resolve } from 'path';
 
-const isPreview = process.env.ASTRO_PREVIEW === 'true';
-
 export default defineConfig({
   output: 'server',
-  adapter: isPreview
-    ? node({ mode: 'standalone' })
-    : vercel({
-        edgeMiddleware: false,
-        functionPerRoute: false,
-      }),
+  adapter: vercel(),
   integrations: [react()],
   build: {
     inlineStylesheets: 'auto',

@@ -17,7 +17,8 @@ const translateClass = isHomePage ? '-translate-y-full' : 'translate-y-0';
 
 <header
   id="main-header"
-  class={`w-full ${positionClass} top-0 z-50 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 transition-transform duration-300 ${translateClass} bg-primary`}
+  class={`w-full ${positionClass} top-0 z-50 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 transition-all duration-500 ease-out ${translateClass} bg-primary/20 backdrop-blur-md`}
+  style="opacity: 0;"
   data-is-home={isHomePage}
 >
   <div class="max-w-7xl mx-auto grid grid-cols-3 items-center gap-2 sm:gap-4">
@@ -39,37 +40,47 @@ const translateClass = isHomePage ? '-translate-y-full' : 'translate-y-0';
   const isHomePage = header?.getAttribute('data-is-home') === 'true';
 
   if (isHomePage) {
-    // Solo en la página principal: ocultar cuando el hero esté visible
     const hero = document.getElementById('hero');
 
     if (header && hero) {
+      setTimeout(() => {
+        if (header.classList.contains('-translate-y-full')) {
+          header.style.opacity = '0';
+        }
+      }, 100);
+
       const observer = new IntersectionObserver(
         entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              // Hero is visible -> Hide header
               header.classList.add('-translate-y-full');
-              header.classList.remove('translate-y-0');
+              header.classList.remove('translate-y-0', 'scale-100');
+              header.style.opacity = '0';
             } else {
-              // Hero is not visible -> Show header
               header.classList.remove('-translate-y-full');
               header.classList.add('translate-y-0');
+
+              requestAnimationFrame(() => {
+                header.style.opacity = '1';
+                header.classList.add('scale-100');
+              });
             }
           });
         },
         {
-          root: null, // viewport
-          threshold: 0, // trigger as soon as even 1px is visible (or not)
+          root: null,
+          threshold: 0,
+          rootMargin: '-50px 0px 0px 0px',
         }
       );
 
       observer.observe(hero);
     }
   } else {
-    // En otras páginas: siempre visible
     if (header) {
       header.classList.remove('-translate-y-full');
       header.classList.add('translate-y-0');
+      header.style.opacity = '1';
     }
   }
 </script>

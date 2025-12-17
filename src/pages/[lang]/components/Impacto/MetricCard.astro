@@ -12,25 +12,28 @@ const { id, value, label, imageSrc, imageAlt } = Astro.props;
 
 <div
   id={`card-${id}`}
-  class="relative rounded-2xl overflow-hidden aspect-4/3 group cursor-pointer transition-transform duration-300 ease-out hover:scale-105 active:scale-95"
+  class="relative rounded-2xl overflow-hidden aspect-4/3 group cursor-pointer transition-all duration-300 ease-out hover:scale-105 hover:shadow-2xl hover:shadow-accent/20 active:scale-95 border-2 border-transparent hover:border-accent/30"
   onclick={`window.dispatchEvent(new CustomEvent('open-modal-${id}', { detail: { modalId: '${id}' } }))`}
 >
   <img
     src={imageSrc}
     alt={imageAlt}
-    class="absolute inset-0 w-full h-full object-cover block"
+    class="absolute inset-0 w-full h-full object-cover block transition-transform duration-500 ease-out group-hover:scale-110 group-hover:brightness-110"
   />
-  <div class="absolute inset-0 bg-linear-to-b from-black/60 to-black/40"></div>
   <div
-    class="relative h-full flex flex-col justify-center items-center p-4 sm:p-6 md:p-8"
+    class="absolute inset-0 bg-linear-to-b from-black/60 to-black/40 transition-opacity duration-300 group-hover:from-black/50 group-hover:to-black/30"
+  >
+  </div>
+  <div
+    class="relative h-full flex flex-col justify-center items-center p-4 sm:p-6 md:p-8 transition-transform duration-300 group-hover:-translate-y-1"
   >
     <div
-      class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-montserrat font-bold mb-2 sm:mb-3"
+      class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-montserrat font-bold mb-2 sm:mb-3 transition-all duration-300 group-hover:text-shadow-glow"
     >
       {value}
     </div>
     <div
-      class="text-sm sm:text-base md:text-lg lg:text-xl font-montserrat font-semibold text-center px-2"
+      class="text-sm sm:text-base md:text-lg lg:text-xl font-montserrat font-semibold text-center px-2 transition-all duration-300 group-hover:text-shadow-glow"
     >
       {label}
     </div>
