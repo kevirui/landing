@@ -1,5 +1,7 @@
 import React from 'react';
 import { ServiceCard } from './ServiceCard';
+import { CarouselDots } from './CarouselDots';
+import { CarouselNavigationButtons } from './CarouselNavigationButtons';
 import { useCarousel } from './useCarousel';
 
 interface Service {
@@ -100,72 +102,28 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
           {/* Navigation Controls */}
           {services.length > 1 && (
             <>
-              {/* Navigation Buttons */}
-              <div className="navigation-buttons flex justify-center gap-4 mt-8">
-                <button
-                  onClick={() => {
-                    prevSlide();
-                    pauseAutoAdvance();
-                    setTimeout(resumeAutoAdvance, 3000);
-                  }}
-                  className="nav-button nav-button-prev flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 border-2 border-white/20 text-white cursor-pointer transition-all duration-300 ease-in-out backdrop-blur-[10px] hover:bg-white/20 hover:border-white/40 hover:scale-110 hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)] active:scale-95"
-                  aria-label="Previous slide"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                <button
-                  onClick={() => {
-                    nextSlide();
-                    pauseAutoAdvance();
-                    setTimeout(resumeAutoAdvance, 3000);
-                  }}
-                  className="nav-button nav-button-next flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 border-2 border-white/20 text-white cursor-pointer transition-all duration-300 ease-in-out backdrop-blur-[10px] hover:bg-white/20 hover:border-white/40 hover:scale-110 hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)] active:scale-95"
-                  aria-label="Next slide"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-              </div>
+              <CarouselNavigationButtons
+                onPrevious={() => {
+                  prevSlide();
+                  pauseAutoAdvance();
+                  setTimeout(resumeAutoAdvance, 3000);
+                }}
+                onNext={() => {
+                  nextSlide();
+                  pauseAutoAdvance();
+                  setTimeout(resumeAutoAdvance, 3000);
+                }}
+              />
 
-              <div className="dot-indicators flex justify-center gap-3 mt-6">
-                {services.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      goToSlide(index);
-                      pauseAutoAdvance();
-                      setTimeout(resumeAutoAdvance, 3000);
-                    }}
-                    className={`p-0 cursor-pointer transition-all duration-300 ease-in-out border-2 rounded-full hover:scale-125 ${
-                      index === currentIndex
-                        ? 'w-8 md:w-8 h-3 md:h-3 bg-white border-white rounded-md shadow-[0_2px_8px_rgba(255,255,255,0.3)]'
-                        : 'w-3 md:w-3 h-3 md:h-3 bg-white/30 border-white/40 hover:bg-white/50'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
+              <CarouselDots
+                totalDots={services.length}
+                currentIndex={currentIndex}
+                onDotClick={index => {
+                  goToSlide(index);
+                  pauseAutoAdvance();
+                  setTimeout(resumeAutoAdvance, 3000);
+                }}
+              />
             </>
           )}
         </div>
@@ -188,22 +146,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
-        }
-
-        .nav-button svg {
-          transition: transform 0.3s ease;
-        }
-
-        .nav-button:hover svg {
-          transform: translateX(0);
-        }
-
-        .nav-button-prev:hover svg {
-          transform: translateX(-2px);
-        }
-
-        .nav-button-next:hover svg {
-          transform: translateX(2px);
         }
       `}</style>
     </section>
