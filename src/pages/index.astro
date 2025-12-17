@@ -3,16 +3,37 @@ export const prerender = true;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url=/es" />
     <title>Redirecting...</title>
     <script>
-      window.location.href = '/es';
+      // Detect browser language and redirect to the appropriate locale
+      function getBrowserLocale() {
+        const availableLocales = ['es', 'en', 'pt'];
+        const defaultLocale = 'en';
+
+        // Get browser language (e.g., 'es-ES', 'en-US', 'pt-BR')
+        const browserLang =
+          navigator.language || navigator.languages?.[0] || 'en';
+
+        // Extract the primary language code (e.g., 'es' from 'es-ES')
+        const primaryLang = browserLang.split('-')[0].toLowerCase();
+
+        // Check if the primary language is available
+        if (availableLocales.includes(primaryLang)) {
+          return primaryLang;
+        }
+
+        // Default to Spanish if browser language is not supported
+        return defaultLocale;
+      }
+
+      const locale = getBrowserLocale();
+      window.location.href = `/${locale}`;
     </script>
   </head>
   <body>
-    <p>Redirecting to <a href="/es">/es</a>...</p>
+    <p>Redirecting...</p>
   </body>
 </html>
